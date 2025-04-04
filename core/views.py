@@ -3,11 +3,20 @@ from django.shortcuts import render
 def home(request):
     return render(request, 'core/home.html')
 
-def sobre(request):
-    return render(request, 'core/sobre.html')
+def about(request):
+    return render(request, 'core/about.html')
 
-def servicos(request):
-    return render(request, 'core/servicos.html')
+def contact(request):
+    return render(request, 'core/contact.html')
 
-def contato(request):
-    return render(request, 'core/contato.html')
+def services(request):
+    return render(request, 'core/services.html')
+
+def blog(request):
+    return render(request, 'core/blog.html')
+
+def post_detail(request, post_id):
+    return render(request, 'core/post_detail.html', {'post_id': post_id})
+
+def booking_view(request):
+    return render(request, 'booking.html')
