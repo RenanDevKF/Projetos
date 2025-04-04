@@ -1,55 +1,89 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}Home - Massoterapia{% endblock %}
+{% block title %}Início - Fatho Massoterapia{% endblock %}
 
 {% block content %}
-<section class="hero-section py-5">
-    <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-6">
-                <h1 class="display-4">Massoterapia Profissional</h1>
-                <p class="lead">Cuidando da sua saúde e bem-estar através de técnicas especializadas de massagem.</p>
-                <a href="{% url 'core:contato' %}" class="btn btn-primary btn-lg">Agende uma Sessão</a>
-            </div>
-            <div class="col-lg-6">
-                <img src="{{ STATIC_URL }}img/placeholder-massage.jpg" alt="Massoterapia" class="img-fluid rounded">
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-r from-fatho-mint to-fatho-light py-20">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl font-bold text-fatho-dark mb-4">Massoterapia Profissional</h1>
+                    <p class="text-lg md:text-xl mb-6">Cuide do seu bem-estar com tratamentos personalizados para corpo e mente.</p>
+                    <a href="{% url 'services' %}" class="bg-primary text-white px-6 py-3 rounded-md hover:bg-primary/90 transition">Conheça nossos serviços</a>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <img src="{% static 'images/massage-hero.jpg' %}" alt="Massoterapia" class="rounded-lg shadow-lg max-w-full h-auto">
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<section class="services-preview py-5 bg-light">
-    <div class="container">
-        <h2 class="text-center mb-4">Nossos Serviços</h2>
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-body text-center">
-                        <h3 class="card-title">Massagem Relaxante</h3>
-                        <p class="card-text">Alivie o estresse e a tensão com nossa massagem relaxante.</p>
-                        <a href="{% url 'core:servicos' %}" class="btn btn-outline-primary">Saiba Mais</a>
+    <!-- Serviços em Destaque -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-semibold text-center mb-12">Nossos Serviços</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {% for service in featured_services %}
+                <div class="bg-fatho-light rounded-lg shadow-md overflow-hidden">
+                    <img src="{{ service.image.url }}" alt="{{ service.name }}" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">{{ service.name }}</h3>
+                        <p class="text-gray-700 mb-4">{{ service.short_description }}</p>
+                        <a href="{% url 'service_detail' service.slug %}" class="text-primary font-medium hover:underline">Saiba mais</a>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-body text-center">
-                        <h3 class="card-title">Massagem Terapêutica</h3>
-                        <p class="card-text">Tratamento para dores musculares e problemas específicos.</p>
-                        <a href="{% url 'core:servicos' %}" class="btn btn-outline-primary">Saiba Mais</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mb-4">
-                    <div class="card-body text-center">
-                        <h3 class="card-title">Drenagem Linfática</h3>
-                        <p class="card-text">Estimule a circulação e reduza a retenção de líquidos.</p>
-                        <a href="{% url 'core:servicos' %}" class="btn btn-outline-primary">Saiba Mais</a>
-                    </div>
-                </div>
+                {% endfor %}
             </div>
         </div>
-    </div>
-</section>
+    </section>
+
+    <!-- Chamada para Agendamento -->
+    <section class="bg-fatho-gold/10 py-16">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-semibold mb-4">Agende sua sessão hoje!</h2>
+            <p class="text-lg mb-8 max-w-3xl mx-auto">Experimente os benefícios da massoterapia profissional. Agende uma consulta e comece sua jornada para uma vida mais saudável e equilibrada.</p>
+            <a href="{% url 'core:booking' %}" class="bg-primary text-white px-6 py-3 rounded-md hover:bg-primary/90 transition">Agendar agora</a>
+        </div>
+    </section>
+
+    <!-- Depoimentos -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-semibold text-center mb-12">O que nossos clientes dizem</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {% for testimonial in testimonials %}
+                <div class="bg-fatho-light p-6 rounded-lg shadow-sm">
+                    <div class="flex items-center mb-4">
+                        {% if testimonial.client_image %}
+                        <img src="{{ testimonial.client_image.url }}" alt="{{ testimonial.client_name }}" class="w-12 h-12 rounded-full mr-4">
+                        {% else %}
+                        <div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center mr-4">
+                            {{ testimonial.client_name|first }}
+                        </div>
+                        {% endif %}
+                        <div>
+                            <h4 class="font-semibold">{{ testimonial.client_name }}</h4>
+                            <div class="flex text-fatho-gold">
+                                {% for i in "12345" %}
+                                    {% if forloop.counter <= testimonial.rating %}
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z" />
+                                    </svg>
+                                    {% else %}
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-300" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z" />
+                                    </svg>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700">{{ testimonial.content }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
 {% endblock %}
