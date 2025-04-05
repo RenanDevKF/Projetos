@@ -1,7 +1,15 @@
 from django.shortcuts import render
+from services.models import Service
+
 
 def home(request):
-    return render(request, 'core/home.html')
+    featured_services = Service.objects.filter(is_featured=True)[:3]
+    testimonials = Testimonial.objects.filter(is_published=True)[:6]
+    
+    return render(request, 'core/home.html', {
+        'featured_services': featured_services,
+        'testimonials': testimonials,
+    })
 
 def about(request):
     return render(request, 'core/about.html')
