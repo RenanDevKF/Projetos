@@ -4,34 +4,115 @@
 {% block title %}Início - Fatho Massoterapia{% endblock %}
 
 {% block content %}
-    <!-- Hero Section -->
-    <section class="bg-gradient-to-r from-fatho-mint to-fatho-light py-20">
+    <!-- Hero Section com imagem de fundo -->
+    <section class="relative bg-cover bg-center h-screen" style="background-image: url('{% static 'img/massage-hero.jpg' %}')">
+        <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+        <div class="container mx-auto px-4 h-full flex flex-col items-center justify-center relative z-10 text-center text-white">
+            <div class="bg-fatho-mint/30 p-2 rounded-md mb-4">
+                <span class="text-white">⚙️</span>
+            </div>
+            <h1 class="text-5xl font-bold mb-2">Fatho Massoterapia</h1>
+            <p class="text-xl mb-8 max-w-2xl">Transforme sua saúde e bem-estar através do poder do toque terapêutico</p>
+            <div class="flex flex-wrap gap-4 justify-center">
+                <a href="{% url 'core:booking' %}" class="bg-fatho-gold hover:bg-fatho-gold/80 text-fatho-dark px-6 py-3 rounded font-medium">Agendar Consulta</a>
+                <a href="{% url 'core:services' %}" class="bg-transparent border-fatho-gold border text-white hover:bg-fatho-gold/20 px-6 py-3 rounded font-medium">Nossos Serviços</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sobre Fatho -->
+    <section class="py-16 bg-fatho-light">
         <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row items-center">
-                <div class="md:w-1/2 mb-10 md:mb-0">
-                    <h1 class="text-4xl md:text-5xl font-bold text-fatho-dark mb-4">Massoterapia Profissional</h1>
-                    <p class="text-lg md:text-xl mb-6">Cuide do seu bem-estar com tratamentos personalizados para corpo e mente.</p>
-                    <a href="{% url 'core:services' %}" class="bg-primary text-white px-6 py-3 rounded-md hover:bg-primary/90 transition">Conheça nossos serviços</a>
+            <h2 class="text-3xl font-semibold text-center mb-12">Sobre Fatho</h2>
+            <div class="flex flex-col md:flex-row items-center gap-8">
+                <div class="md:w-1/3">
+                    <img src="{% static 'img/profile.jpg' %}" alt="Profissional de massoterapia" class="rounded-full w-64 h-64 object-cover mx-auto grayscale">
                 </div>
-                <div class="md:w-1/2 flex justify-center">
-                    <img src="{% static 'images/massage-hero.jpg' %}" alt="Massoterapia" class="rounded-lg shadow-lg max-w-full h-auto">
+                <div class="md:w-2/3">
+                    <p class="text-gray-700 mb-4">
+                        Com mais de 10 anos de experiência, somos especialistas em técnicas de massagem terapêutica e relaxante. Formados pela Escola Brasileira de Massoterapia, combinamos conhecimentos de medicina oriental e ocidental para proporcionar o melhor tratamento personalizado para cada cliente.
+                    </p>
+                    <p class="text-gray-700">
+                        Nossa abordagem holística considera não apenas os sintomas físicos, mas também aspectos emocionais e energéticos, proporcionando um tratamento verdadeiramente completo e transformador.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Serviços em Destaque -->
-    <section class="py-16 bg-white">
+    <!-- Navegação de Serviços -->
+    <section class="py-8 bg-white">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-semibold text-center mb-12">Nossos Serviços</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="flex justify-center space-x-8">
+                <a href="#servicos" class="text-primary hover:text-primary/80 transition">Serviços</a>
+                <a href="#depoimentos" class="text-fatho-dark hover:text-primary transition">Depoimentos</a>
+                <a href="#contato" class="text-fatho-dark hover:text-primary transition">Contato</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Serviços -->
+    <section id="servicos" class="py-16 bg-fatho-light">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {% for service in featured_services %}
-                <div class="bg-fatho-light rounded-lg shadow-md overflow-hidden">
-                    <img src="{{ service.image.url }}" alt="{{ service.name }}" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">{{ service.name }}</h3>
+                <div class="overflow-hidden bg-white rounded-lg border shadow-sm">
+                    <div class="bg-fatho-mint/20 p-6">
+                        <h3 class="text-2xl font-semibold leading-none tracking-tight">{{ service.name }}</h3>
+                    </div>
+                    <div class="p-6 pt-6">
                         <p class="text-gray-700 mb-4">{{ service.short_description }}</p>
-                        <a href="{% url 'service_detail' service.slug %}" class="text-primary font-medium hover:underline">Saiba mais</a>
+                        <div class="flex items-center text-gray-500 mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            <span>{{ service.duration }} min</span>
+                        </div>
+                        <p class="font-bold">R$ {{ service.price }}</p>
+                    </div>
+                    <div class="p-6 pt-0 flex justify-end">
+                        <a href="{% url 'core:booking' %}?service={{ service.id }}" class="bg-fatho-gold hover:bg-fatho-gold/80 text-fatho-dark px-4 py-2 rounded inline-flex items-center justify-center">Agendar</a>
+                    </div>
+                </div>
+                {% empty %}
+                <!-- Fallback para quando não houver serviços cadastrados -->
+                <div class="overflow-hidden bg-white rounded-lg border shadow-sm">
+                    <div class="bg-fatho-mint/20 p-6">
+                        <h3 class="text-2xl font-semibold leading-none tracking-tight">Massagem Relaxante</h3>
+                    </div>
+                    <div class="p-6 pt-6">
+                        <p class="text-gray-700 mb-4">Alívio do estresse e tensão muscular com movimentos suaves.</p>
+                        <div class="flex items-center text-gray-500 mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            <span>60 min</span>
+                        </div>
+                        <p class="font-bold">R$ 120</p>
+                    </div>
+                    <div class="p-6 pt-0 flex justify-end">
+                        <a href="{% url 'core:booking' %}" class="bg-fatho-gold hover:bg-fatho-gold/80 text-fatho-dark px-4 py-2 rounded inline-flex items-center justify-center">Agendar</a>
+                    </div>
+                </div>
+                <div class="overflow-hidden bg-white rounded-lg border shadow-sm">
+                    <div class="bg-fatho-mint/20 p-6">
+                        <h3 class="text-2xl font-semibold leading-none tracking-tight">Massagem Terapêutica</h3>
+                    </div>
+                    <div class="p-6 pt-6">
+                        <p class="text-gray-700 mb-4">Tratamento focado em áreas específicas para alívio de dores.</p>
+                        <div class="flex items-center text-gray-500 mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            <span>50 min</span>
+                        </div>
+                        <p class="font-bold">R$ 150</p>
+                    </div>
+                    <div class="p-6 pt-0 flex justify-end">
+                        <a href="{% url 'core:booking' %}" class="bg-fatho-gold hover:bg-fatho-gold/80 text-fatho-dark px-4 py-2 rounded inline-flex items-center justify-center">Agendar</a>
                     </div>
                 </div>
                 {% endfor %}
@@ -39,32 +120,55 @@
         </div>
     </section>
 
-    <!-- Chamada para Agendamento -->
-    <section class="bg-fatho-gold/10 py-16">
-        <div class="container mx-auto px-4 text-center">
-            <h2 class="text-3xl font-semibold mb-4">Agende sua sessão hoje!</h2>
-            <p class="text-lg mb-8 max-w-3xl mx-auto">Experimente os benefícios da massoterapia profissional. Agende uma consulta e comece sua jornada para uma vida mais saudável e equilibrada.</p>
-            <a href="{% url 'core:booking' %}" class="bg-primary text-white px-6 py-3 rounded-md hover:bg-primary/90 transition">Agendar agora</a>
+    <!-- Agendamento -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4 max-w-3xl">
+            <div class="bg-white rounded-lg shadow-md p-8">
+                <h2 class="text-3xl font-semibold text-center mb-8">Agende sua Sessão</h2>
+                <p class="text-center text-gray-700 mb-4">Facilite seu agendamento com nosso sistema online</p>
+                <p class="text-center text-gray-700 mb-8">Com nosso sistema, você pode:</p>
+                
+                <ul class="space-y-2 mb-8">
+                    <li class="flex items-center">
+                        <span class="text-green-500 mr-2">✓</span>
+                        <span>Selecionar serviços</span>
+                    </li>
+                    <li class="flex items-center">
+                        <span class="text-green-500 mr-2">✓</span>
+                        <span>Verificar horários disponíveis</span>
+                    </li>
+                    <li class="flex items-center">
+                        <span class="text-green-500 mr-2">✓</span>
+                        <span>Receber confirmação por e-mail/WhatsApp</span>
+                    </li>
+                </ul>
+                
+                <div class="flex justify-center">
+                    <a href="{% url 'core:booking' %}" class="bg-fatho-gold hover:bg-fatho-gold/80 text-fatho-dark px-6 py-3 rounded font-medium">
+                        Agendar agora
+                    </a>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- Depoimentos -->
-    <section class="py-16 bg-white">
+    <section id="depoimentos" class="py-16 bg-fatho-light">
         <div class="container mx-auto px-4">
             <h2 class="text-3xl font-semibold text-center mb-12">O que nossos clientes dizem</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {% for testimonial in testimonials %}
-                <div class="bg-fatho-light p-6 rounded-lg shadow-sm">
+                <div class="bg-white p-6 rounded-lg shadow-sm">
                     <div class="flex items-center mb-4">
-                        {% if testimonial.client_image %}
-                        <img src="{{ testimonial.client_image.url }}" alt="{{ testimonial.client_name }}" class="w-12 h-12 rounded-full mr-4">
+                        {% if testimonial.photo %}
+                        <img src="{{ testimonial.photo.url }}" alt="{{ testimonial.name }}" class="w-12 h-12 rounded-full mr-4">
                         {% else %}
                         <div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center mr-4">
-                            {{ testimonial.client_name|first }}
+                            {{ testimonial.name|first }}
                         </div>
                         {% endif %}
                         <div>
-                            <h4 class="font-semibold">{{ testimonial.client_name }}</h4>
+                            <h4 class="font-semibold">{{ testimonial.name }}</h4>
                             <div class="flex text-fatho-gold">
                                 {% for i in "12345" %}
                                     {% if forloop.counter <= testimonial.rating %}
@@ -80,9 +184,111 @@
                             </div>
                         </div>
                     </div>
-                    <p class="text-gray-700">{{ testimonial.content }}</p>
+                    <p class="text-gray-700">{{ testimonial.comment }}</p>
+                </div>
+                {% empty %}
+                <!-- Fallback para quando não houver depoimentos cadastrados -->
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center mr-4">
+                            M
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Maria Silva</h4>
+                            <div class="flex text-fatho-gold">
+                                {% for i in "12345" %}
+                                    {% if forloop.counter <= 5 %}
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z" />
+                                    </svg>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700">As massagens terapêuticas da Fatho são simplesmente transformadoras. Após algumas sessões, minhas dores nas costas diminuíram consideravelmente!</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center mr-4">
+                            J
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">João Pereira</h4>
+                            <div class="flex text-fatho-gold">
+                                {% for i in "12345" %}
+                                    {% if forloop.counter <= 5 %}
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z" />
+                                    </svg>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700">Ambiente muito acolhedor e profissionais extremamente capacitados. Recomendo a massagem relaxante para quem precisa de um momento de paz!</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center mr-4">
+                            A
+                        </div>
+                        <div>
+                            <h4 class="font-semibold">Ana Oliveira</h4>
+                            <div class="flex text-fatho-gold">
+                                {% for i in "12345" %}
+                                    {% if forloop.counter <= 4 %}
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z" />
+                                    </svg>
+                                    {% else %}
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-300" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z" />
+                                    </svg>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700">Experimentei a reflexologia e foi uma experiência incrível. Minha disposição melhorou muito! O sistema de agendamento online é super prático também.</p>
                 </div>
                 {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Contato Rápido -->
+    <section id="contato" class="py-16 bg-white">
+        <div class="container mx-auto px-4 max-w-3xl">
+            <div class="bg-white rounded-lg shadow-md p-8">
+                <h2 class="text-3xl font-semibold text-center mb-8">Entre em Contato</h2>
+                <p class="text-center text-gray-700 mb-8">Estamos prontos para responder suas dúvidas e ajudar no que for preciso.</p>
+                
+                <div class="flex flex-col md:flex-row justify-around items-center mb-8 space-y-4 md:space-y-0">
+                    <div class="text-center">
+                        <div class="bg-fatho-mint/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                            </svg>
+                        </div>
+                        <p class="font-medium">(11) 99765-4321</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="bg-fatho-mint/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                        </div>
+                        <p class="font-medium">contato@fathomassagens.com.br</p>
+                    </div>
+                </div>
+                
+                <div class="flex justify-center">
+                    <a href="{% url 'core:contact' %}" class="bg-fatho-gold hover:bg-fatho-gold/80 text-fatho-dark px-6 py-3 rounded font-medium">
+                        Enviar Mensagem
+                    </a>
+                </div>
             </div>
         </div>
     </section>
