@@ -10,10 +10,12 @@
   
   /* Ajustes para background de hero section com overlay gradiente */
   .hero-section {
-    position: relative;
-    background-size: cover;
-    background-position: center;
-    height: 100vh;
+    position: relative !important;
+    background-size: cover !important;
+    background-position: center !important;
+    height: 50vh !important; /* Forçando altura de 50vh */
+    min-height: 450px !important; /* Garantir altura mínima em telas pequenas */
+    max-height: 550px !important; /* Adicionar altura máxima */
   }
   
   .hero-section:before {
@@ -97,4 +99,56 @@
     100% {
       box-shadow: 0 0 0 0 rgba(200, 169, 126, 0);
     }
+  }
+  
+  /* Estilo para o banner hero com imagem de fundo */
+  .bg-hero {
+    /*background-image: url('../img/massage-hero.jpg');*/
+    background-size: cover !important;
+    background-position: center !important;
+    position: relative !important;
+    height: 50vh !important; /* Forçando altura de 50vh */
+    min-height: 450px !important; /* Garantir altura mínima em telas pequenas */
+    max-height: 550px !important; /* Adicionar altura máxima */
+  }
+  
+  .bg-hero::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+  }
+  
+  .bg-hero > * {
+    position: relative;
+    z-index: 2;
+  }
+  
+  /* Estilo para cartões de serviço com efeito hover */
+  .service-card {
+    transition: all 0.3s ease;
+  }
+  
+  .service-card:hover {
+    transform: translateY(-10px);
+  }
+  
+  /* Estilos para seção de depoimentos */
+  .testimonial-card {
+    transition: all 0.3s ease;
+  }
+  
+  .testimonial-card:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Classe para forçar altura do hero */
+  .hero-height {
+    height: 100vh !important;
+    min-height: 450px !important;
+    max-height: 550px !important;
   }
