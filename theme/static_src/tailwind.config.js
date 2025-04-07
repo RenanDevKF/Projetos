@@ -25,20 +25,23 @@ module.exports = {
          * Adjust the following line to match your project structure.
          */
         '../../**/templates/**/*.html',
+
+        /* JavaScript files that might contain Tailwind CSS classes */
+        './static/js/**/*.js',
     ],
     theme: {
         extend: {
             colors: {
                 primary: {
-                    DEFAULT: 'hsl(142 30% 50%)',
-                    foreground: 'hsl(0 0% 98%)',
+                    DEFAULT: 'hsl(142, 30%, 50%)',
+                    foreground: 'hsl(210, 40%, 98%)',
                 },
                 secondary: {
-                    DEFAULT: 'hsl(142 30% 96%)',
-                    foreground: 'hsl(142 30% 30%)',
+                    DEFAULT: 'hsl(142, 30%, 96%)',
+                    foreground: 'hsl(142, 30%, 30%)',
                 },
-                background: 'hsl(150 30% 98%)',
-                foreground: 'hsl(222.2 84% 4.9%)',
+                background: 'hsl(150, 30%, 98%)',
+                foreground: 'hsl(222.2, 84%, 4.9%)',
                 fatho: {
                     mint: '#d4e8d9',
                     dark: '#333333',
