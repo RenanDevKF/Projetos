@@ -1,6 +1,3 @@
-/* Arquivo para estilos customizados que vão além do Tailwind */
-
-/* Definindo cores personalizadas caso não estejam no tailwind.config */
 :root {
     --fatho-mint: #d4e8d9;
     --fatho-dark: #333333;
@@ -8,87 +5,174 @@
     --fatho-light: #f5f9f6;
   }
   
-  /* Ajustes para background de hero section com overlay gradiente */
-  .hero-section {
+  /* === HERO SECTION === */
+  .hero-section,
+  .bg-hero {
     position: relative !important;
     background-size: cover !important;
     background-position: center !important;
-    height: 50vh !important; /* Forçando altura de 50vh */
-    min-height: 450px !important; /* Garantir altura mínima em telas pequenas */
-    max-height: 550px !important; /* Adicionar altura máxima */
+    height: 50vh !important;
+    min-height: 450px !important;
+    max-height: 550px !important;
   }
   
-  .hero-section:before {
+  .hero-section::before,
+  .bg-hero::after {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    top: 0; left: 0; right: 0; bottom: 0;
     background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6));
+    z-index: 1;
   }
   
-  /* Efeito de transição suave para links e botões */
+  .bg-hero > * {
+    position: relative;
+    z-index: 2;
+  }
+  
+  .hero-height {
+    height: 100vh !important;
+    min-height: 450px !important;
+    max-height: 550px !important;
+  }
+  
+  /* === TRANSIÇÕES === */
   a, button {
     transition: all 0.3s ease;
   }
   
-  /* Efeito de hover em cards */
-  .service-card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .service-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Estilo para as avaliações em estrelas */
-  .star-rating .star {
-    color: #c8a97e;
-  }
-  
-  .star-rating .star-empty {
-    color: #e2e8f0;
-  }
-  
-  /* Animação para o botão de menu mobile */
+  /* === BOTÃO MENU MOBILE === */
   #mobile-menu-button {
     transition: transform 0.3s ease;
   }
-  
   #mobile-menu-button:hover {
     transform: scale(1.1);
   }
   
-  /* Estilo para scrollbar personalizada */
+  /* === SCROLLBAR CUSTOMIZADA === */
   ::-webkit-scrollbar {
     width: 8px;
   }
-  
   ::-webkit-scrollbar-track {
     background: #f5f9f6;
   }
-  
   ::-webkit-scrollbar-thumb {
-    background: #c8a97e;
+    background: var(--fatho-gold);
     border-radius: 4px;
   }
-  
   ::-webkit-scrollbar-thumb:hover {
     background: #b89868;
   }
   
-  /* Estilos para formulários */
+  /* === FORMULÁRIOS === */
   input, textarea, select {
     @apply border border-gray-300 rounded-md px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-fatho-gold/50 focus:border-transparent transition;
   }
   
-  /* Botão de agendamento com efeito de pulsação */
+  /* === SERVICE CARDS === */
+  .service-card {
+    background-color: var(--fatho-mint);
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* === AVALIAÇÕES COM ESTRELAS === */
+  .star-rating .star {
+    color: var(--fatho-gold);
+  }
+  .star-rating .star-empty {
+    color: #e2e8f0;
+  }
+  
+  /* === TESTEMUNHOS / DEPOIMENTOS === */
+  .testimonial-card {
+    transition: all 0.3s ease;
+  }
+  .testimonial-card:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* === PERFIL EM FORMATO PÍLULA === */
+  .profile-pill {
+    display: inline-block;
+    position: relative;
+    width: 11rem; /* 176px */
+    height: 16rem; /* 256px */
+    border-radius: 40px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+  .profile-pill img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .profile-pill:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(200, 169, 126, 0.3);
+  }
+  
+  /* === RESPONSIVO PÍLULA === */
+  @media (max-width: 768px) {
+    .profile-pill {
+      width: 10rem;
+      height: 12rem;
+      border-radius: 30px;
+    }
+  }
+  
+  /* === NAVBAR LINKS === */
+  .nav-links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+  .nav-links a {
+    color: var(--fatho-dark);
+    text-decoration: none;
+    position: relative;
+    padding-bottom: 0.25rem;
+    transition: all 0.3s ease;
+  }
+  .nav-links a:hover {
+    color: var(--fatho-gold);
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--fatho-gold);
+    transition: width 0.3s ease;
+  }
+  .nav-links a:hover::after {
+    width: 100%;
+  }
+  
+  /* === IMAGEM DE PERFIL REDONDA === */
+  .rounded-full.border-4 {
+    display: inline-block;
+    position: relative;
+    box-shadow: 0 0 15px rgba(200, 169, 126, 0.3);
+    transition: all 0.3s ease;
+  }
+  .rounded-full.border-4:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(200, 169, 126, 0.5);
+  }
+  
+  /* === BOTÃO PULSANTE === */
   .btn-booking {
     animation: pulse 2s infinite;
   }
-  
   @keyframes pulse {
     0% {
       box-shadow: 0 0 0 0 rgba(200, 169, 126, 0.7);
@@ -101,54 +185,21 @@
     }
   }
   
-  /* Estilo para o banner hero com imagem de fundo */
-  .bg-hero {
-    /*background-image: url('../img/massage-hero.jpg');*/
-    background-size: cover !important;
-    background-position: center !important;
-    position: relative !important;
-    height: 50vh !important; /* Forçando altura de 50vh */
-    min-height: 450px !important; /* Garantir altura mínima em telas pequenas */
-    max-height: 550px !important; /* Adicionar altura máxima */
+  /* === ALINHAMENTO SOBRE === */
+  .flex.items-center {
+    display: flex;
+    align-items: center;
   }
   
-  .bg-hero::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 1;
+  /* === FLEX MOBILE === */
+  @media (max-width: 768px) {
+    .flex.flex-col.md\:flex-row {
+      align-items: center;
+      text-align: center;
+    }
+  
+    .flex.flex-col.md\:flex-row > div:first-child {
+      margin-bottom: 2rem;
+    }
   }
   
-  .bg-hero > * {
-    position: relative;
-    z-index: 2;
-  }
-  
-  /* Estilo para cartões de serviço com efeito hover */
-  .service-card {
-    transition: all 0.3s ease;
-  }
-  
-  .service-card:hover {
-    transform: translateY(-10px);
-  }
-  
-  /* Estilos para seção de depoimentos */
-  .testimonial-card {
-    transition: all 0.3s ease;
-  }
-  
-  .testimonial-card:hover {
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Classe para forçar altura do hero */
-  .hero-height {
-    height: 100vh !important;
-    min-height: 450px !important;
-    max-height: 550px !important;
-  }
