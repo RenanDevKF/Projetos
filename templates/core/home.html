@@ -22,37 +22,37 @@
 
 
     <!-- Sobre Fatho -->
-    <section class="py-20 bg-fatho-light">
-        <div class="container mx-auto px-4">
-        <h2 class="text-4xl font-bold text-center text-fatho-dark mb-16">
-            Sobre Fatho
-        </h2>
-    
-        <div class="flex flex-col md:flex-row items-center md:items-start max-w-5xl mx-auto gap-10">
-            
-            <!-- Foto do perfil em formato oval/pílula -->
-            <div class="w-40 h-40 rounded-full overflow-hidden shadow-lg border-4 border-fatho-dark flex-shrink-0">
-            <img src="{% static 'img/profile.jpg' %}" 
-                alt="Profissional de massoterapia" 
-                class="object-cover w-full h-full">
-            </div>
-    
-                <!-- Texto da bio com mais espaço e melhor espaçamento entre parágrafos -->
-                <div class="text-fatho-dark text-lg leading-relaxed flex-1">
-                    <p class="mb-8">
-                        Com mais de 10 anos de experiência, Frederico é especialista em técnicas de massagem terapêutica 
-                        e relaxante. Formado pela Escola Brasileira de Massoterapia, ele combina conhecimentos de 
-                        medicina oriental e ocidental para proporcionar o melhor tratamento personalizado para cada cliente.
-                    </p>
-                    <p>
-                        Sua abordagem holística considera não apenas os sintomas físicos, mas também aspectos 
-                        emocionais e energéticos, proporcionando um tratamento verdadeiramente completo e transformador.
-                    </p>
-                </div>
-    
-        </div>
-        </div>
-    </section>
+<section class="py-20 bg-[#f1f8fc]">
+  <div class="container mx-auto px-4">
+    <h2 class="text-4xl font-bold text-center text-fatho-dark mb-12">
+      Sobre Frederico
+    </h2>
+
+    <!-- Wrapper geral com espaçamento maior -->
+    <div class="flex flex-col md:flex-row items-center md:items-start justify-center max-w-5xl mx-auto">
+
+      <!-- Imagem -->
+      <div class="w-40 h-60 rounded-full overflow-hidden shadow-xl border-4 border-fatho-dark flex-shrink-0 mb-10 md:mb-0 md:mr-12">
+        <img src="{% static 'img/profile.jpg' %}" alt="Foto de Frederico" class="object-cover w-full h-full">
+      </div>
+
+      <!-- Texto com espaçamento garantido -->
+      <div class="flex flex-col justify-center text-left text-fatho-dark text-lg leading-relaxed max-w-2xl">
+        <p class="mb-4">
+          Com mais de 10 anos de experiência, Frederico é especialista em técnicas de massagem terapêutica e relaxante.<br><br>
+          Formado pela Escola Brasileira de Massoterapia, ele combina conhecimentos de medicina oriental e ocidental<br>
+          para proporcionar o melhor tratamento personalizado para cada cliente.
+        </p>
+        <p>
+          Sua abordagem holística considera não apenas os sintomas físicos,<br>
+          mas também aspectos emocionais e energéticos,<br><br>
+          proporcionando um tratamento verdadeiramente completo e transformador.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
   
 
     <!-- Navegação de Serviços -->

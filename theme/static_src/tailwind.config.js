@@ -30,31 +30,44 @@ module.exports = {
       './static/js/**/*.js',
     ],
     theme: {
-      extend: {
-        colors: {
-          primary: {
-            DEFAULT: 'hsl(142, 30%, 50%)',
-            foreground: 'hsl(210, 40%, 98%)',
+        extend: {
+          colors: {
+            primary: {
+              DEFAULT: 'hsl(142, 30%, 50%)',
+              foreground: 'hsl(210, 40%, 98%)',
+            },
+            secondary: {
+              DEFAULT: 'hsl(142, 30%, 96%)',
+              foreground: 'hsl(142, 30%, 30%)',
+            },
+            fatho: {
+              mint: '#d4e8d9',
+              dark: '#333333',
+              gold: '#c8a97e',
+              light: '#f5f9f6',
+              background: 'hsl(150, 30%, 98%)',
+              foreground: 'hsl(222.2, 84%, 4.9%)',
+            },
           },
-          secondary: {
-            DEFAULT: 'hsl(142, 30%, 96%)',
-            foreground: 'hsl(142, 30%, 30%)',
-          },
-          fatho: {
-            mint: '#d4e8d9',
-            dark: '#333333',
-            gold: '#c8a97e',
-            light: '#f5f9f6',
-            background: 'hsl(150, 30%, 98%)',
-            foreground: 'hsl(222.2, 84%, 4.9%)',
-          },
+          typography: (theme) => ({
+            DEFAULT: {
+              css: {
+                color: theme('colors.fatho.dark'),
+                a: {
+                  color: theme('colors.primary.DEFAULT'),
+                  '&:hover': {
+                    color: theme('colors.fatho.gold'),
+                  },
+                },
+              },
+            },
+          }),
         },
       },
-    },
-    plugins: [
-      require('@tailwindcss/forms'),
-      require('@tailwindcss/typography'),
-      require('@tailwindcss/aspect-ratio'),
-    ],
+      plugins: [
+        require('@tailwindcss/forms'),
+        require('@tailwindcss/typography'),
+        require('@tailwindcss/aspect-ratio'),
+      ],
   }
   
