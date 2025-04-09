@@ -69,70 +69,169 @@
     </section>
 
     <!-- Serviços -->
-    <section id="servicos" class="py-16 bg-fatho-light">
+    <section id="servicos" class="py-20 bg-fatho-light">
         <div class="container mx-auto px-4">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-semibold mb-3">Nossos Serviços</h2>
+                <div class="w-24 h-1 bg-fatho-gold mx-auto mb-6"></div>
+                <p class="text-gray-700 max-w-2xl mx-auto">Descubra os tratamentos que oferecemos para seu bem-estar e relaxamento. Cada serviço é personalizado para atender às suas necessidades específicas.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {% for service in featured_services %}
-                <div class="overflow-hidden bg-white rounded-lg border shadow-sm">
-                    <div class="bg-fatho-mint/20 p-6">
-                        <h3 class="text-2xl font-semibold leading-none tracking-tight">{{ service.name }}</h3>
+                <div class="service-card group bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-300 hover:-translate-y-2">
+                    {% if service.image %}
+                    <div class="service-image-container overflow-hidden h-52">
+                        <img src="{{ service.image.url }}" alt="{{ service.name }}" class="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-110">
                     </div>
-                    <div class="p-6 pt-6">
+                    {% endif %}
+                    
+                    {% if service.featured %}
+                    <div class="absolute top-4 left-0 bg-fatho-gold text-fatho-dark px-4 py-1 text-sm font-semibold">
+                        Destaque
+                    </div>
+                    {% endif %}
+                    
+                    <div class="p-6">
+                        <h3 class="text-2xl font-semibold leading-none tracking-tight mb-3">{{ service.name }}</h3>
                         <p class="text-gray-700 mb-4">{{ service.short_description }}</p>
+                        
                         <div class="flex items-center text-gray-500 mb-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-fatho-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <circle cx="12" cy="12" r="10"></circle>
                                 <polyline points="12 6 12 12 16 14"></polyline>
                             </svg>
                             <span>{{ service.duration }} min</span>
                         </div>
-                        <p class="font-bold">R$ {{ service.price }}</p>
-                    </div>
-                    <div class="p-6 pt-0 flex justify-end">
-                        <a href="{% url 'core:booking' %}?service={{ service.id }}" class="bg-fatho-gold hover:bg-fatho-gold/80 text-fatho-dark px-4 py-2 rounded inline-flex items-center justify-center">Agendar</a>
+                        
+                        {% if service.price %}
+                        <div class="text-xl font-bold text-fatho-dark mb-4">
+                            R$ {{ service.price }}
+                        </div>
+                        {% endif %}
+                        
+                        <div class="flex space-x-3">
+                            <a href="{% url 'core:services' %}" 
+                            class="bg-white hover:bg-gray-50 text-fatho-dark border border-fatho-gold flex-1 py-2 rounded-md inline-flex items-center justify-center transition-all font-medium">
+                                Consultar
+                            </a>
+                            <a href="{% url 'core:booking' %}?service={{ service.id }}" 
+                            class="bg-fatho-gold hover:bg-fatho-gold/90 text-fatho-dark flex-1 py-2 rounded-md inline-flex items-center justify-center transition-all font-medium">
+                                Agendar
+                            </a>
+                        </div>
                     </div>
                 </div>
                 {% empty %}
                 <!-- Fallback para quando não houver serviços cadastrados -->
-                <div class="overflow-hidden bg-white rounded-lg border shadow-sm">
-                    <div class="bg-fatho-mint/20 p-6">
-                        <h3 class="text-2xl font-semibold leading-none tracking-tight">Massagem Relaxante</h3>
+                <div class="service-card group bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-300 hover:-translate-y-2">
+                    <div class="service-image-container overflow-hidden h-52">
+                        <img src="/static/images/servicos/pedras-quentes.jpg" alt="Pedras Quentes" class="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-110">
                     </div>
-                    <div class="p-6 pt-6">
-                        <p class="text-gray-700 mb-4">Alívio do estresse e tensão muscular com movimentos suaves.</p>
+                    
+                    <div class="absolute top-4 left-0 bg-fatho-gold text-fatho-dark px-4 py-1 text-sm font-semibold">
+                        Destaque
+                    </div>
+                    
+                    <div class="p-6">
+                        <h3 class="text-2xl font-semibold leading-none tracking-tight mb-3">Pedras Quentes</h3>
+                        <p class="text-gray-700 mb-4">Massagem com pedras vulcânicas para aliviar dores no seu corpo</p>
+                        
                         <div class="flex items-center text-gray-500 mb-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-fatho-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <polyline points="12 6 12 12 16 14"></polyline>
+                            </svg>
+                            <span>90 min</span>
+                        </div>
+                        
+                        <div class="flex space-x-3">
+                            <a href="{% url 'core:service_detail' 'pedras-quentes' %}" 
+                            class="bg-white hover:bg-gray-50 text-fatho-dark border border-fatho-gold flex-1 py-2 rounded-md inline-flex items-center justify-center transition-all font-medium">
+                                Consultar
+                            </a>
+                            <a href="{% url 'core:booking' %}" 
+                            class="bg-fatho-gold hover:bg-fatho-gold/90 text-fatho-dark flex-1 py-2 rounded-md inline-flex items-center justify-center transition-all font-medium">
+                                Agendar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="service-card group bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-300 hover:-translate-y-2">
+                    <div class="service-image-container overflow-hidden h-52">
+                        <img src="/static/images/servicos/massagem.jpg" alt="Massagem" class="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-110">
+                    </div>
+                    
+                    <div class="p-6">
+                        <h3 class="text-2xl font-semibold leading-none tracking-tight mb-3">Massagem</h3>
+                        <p class="text-gray-700 mb-4">Relaxante e revigorante para alívio do estresse</p>
+                        
+                        <div class="flex items-center text-gray-500 mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-fatho-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <circle cx="12" cy="12" r="10"></circle>
                                 <polyline points="12 6 12 12 16 14"></polyline>
                             </svg>
                             <span>60 min</span>
                         </div>
-                        <p class="font-bold">R$ 120</p>
-                    </div>
-                    <div class="p-6 pt-0 flex justify-end">
-                        <a href="{% url 'core:booking' %}" class="bg-fatho-gold hover:bg-fatho-gold/80 text-fatho-dark px-4 py-2 rounded inline-flex items-center justify-center">Agendar</a>
+                        
+                        <div class="flex space-x-3">
+                            <a href="{% url 'core:service_detail' 'massagem' %}" 
+                            class="bg-white hover:bg-gray-50 text-fatho-dark border border-fatho-gold flex-1 py-2 rounded-md inline-flex items-center justify-center transition-all font-medium">
+                                Consultar
+                            </a>
+                            <a href="{% url 'core:booking' %}" 
+                            class="bg-fatho-gold hover:bg-fatho-gold/90 text-fatho-dark flex-1 py-2 rounded-md inline-flex items-center justify-center transition-all font-medium">
+                                Agendar
+                            </a>
+                        </div>
                     </div>
                 </div>
-                <div class="overflow-hidden bg-white rounded-lg border shadow-sm">
-                    <div class="bg-fatho-mint/20 p-6">
-                        <h3 class="text-2xl font-semibold leading-none tracking-tight">Massagem Terapêutica</h3>
+                
+                <div class="service-card group bg-white rounded-lg shadow-md overflow-hidden transform transition-all duration-300 hover:-translate-y-2">
+                    <div class="service-image-container overflow-hidden h-52">
+                        <img src="/static/images/servicos/modeladora.jpg" alt="Modeladora" class="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-110">
                     </div>
-                    <div class="p-6 pt-6">
-                        <p class="text-gray-700 mb-4">Tratamento focado em áreas específicas para alívio de dores.</p>
+                    
+                    <div class="p-6">
+                        <h3 class="text-2xl font-semibold leading-none tracking-tight mb-3">Modeladora</h3>
+                        <p class="text-gray-700 mb-4">Fluxo magno para modelar e tonificar o corpo</p>
+                        
                         <div class="flex items-center text-gray-500 mb-4">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-fatho-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <circle cx="12" cy="12" r="10"></circle>
                                 <polyline points="12 6 12 12 16 14"></polyline>
                             </svg>
                             <span>50 min</span>
                         </div>
-                        <p class="font-bold">R$ 150</p>
-                    </div>
-                    <div class="p-6 pt-0 flex justify-end">
-                        <a href="{% url 'core:booking' %}" class="bg-fatho-gold hover:bg-fatho-gold/80 text-fatho-dark px-4 py-2 rounded inline-flex items-center justify-center">Agendar</a>
+                        
+                        <div class="text-xl font-bold text-fatho-dark mb-4">
+                            R$ 100.00
+                        </div>
+                        
+                        <div class="flex space-x-3">
+                            <a href="{% url 'core:service_detail' 'modeladora' %}" 
+                            class="bg-white hover:bg-gray-50 text-fatho-dark border border-fatho-gold flex-1 py-2 rounded-md inline-flex items-center justify-center transition-all font-medium">
+                                Consultar
+                            </a>
+                            <a href="{% url 'core:booking' %}" 
+                            class="bg-fatho-gold hover:bg-fatho-gold/90 text-fatho-dark flex-1 py-2 rounded-md inline-flex items-center justify-center transition-all font-medium">
+                                Agendar
+                            </a>
+                        </div>
                     </div>
                 </div>
                 {% endfor %}
+            </div>
+        
+            <div class="text-center mt-12">
+                <a href="{% url 'core:services' %}" class="inline-flex items-center px-8 py-3 bg-fatho-gold text-fatho-dark font-medium rounded-md hover:bg-fatho-gold/90 transition-all">
+                    Ver todos os serviços
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14"></path>
+                        <path d="M12 5l7 7-7 7"></path>
+                    </svg>
+                </a>
             </div>
         </div>
     </section>
