@@ -235,6 +235,8 @@ input, textarea, select {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     overflow: hidden;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    height: 100%;
+    background-color: #e8f5e9; /* Cor verde menta claro semelhante à imagem */
   }
   
   .service-card:hover {
@@ -253,6 +255,12 @@ input, textarea, select {
   
   .service-card:hover .service-image-container img {
     transform: scale(1.1);
+  }
+  
+  /* Garantir altura mínima para o conteúdo */
+  .service-card .flex-1 {
+    display: flex;
+    flex-direction: column;
   }
   
   /* Classes para animação JavaScript */
@@ -276,6 +284,19 @@ input, textarea, select {
   
   .service-card a:hover {
     transform: translateY(-2px);
+  }
+  
+  /* Estilo para botão de consultar */
+  .service-card a:first-child {
+    background-color: white;
+    color: #333;
+    border: 1px solid #deb887;
+  }
+  
+  /* Estilo para botão de agendar */
+  .service-card a:last-child {
+    background-color: #deb887;
+    color: #333;
   }
   
   /* Efeito de onda no botão */
@@ -325,14 +346,15 @@ input, textarea, select {
   #servicos .service-card:nth-child(5) { animation-delay: 0.5s; }
   #servicos .service-card:nth-child(6) { animation-delay: 0.6s; }
   
-  /* Estilo para o badge de destaque */
-  .service-card .bg-fatho-gold {
-    box-shadow: 0 2px 8px rgba(240, 173, 78, 0.5);
-  }
-  
   /* Para criar uma grade escalável em telas maiores */
   @media (min-width: 1280px) {
     .grid-cols-3 {
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
+  }
+  
+  /* Garantir que todos os cards tenham a mesma altura */
+  .grid {
+    display: grid;
+    grid-auto-rows: 1fr;
   }
