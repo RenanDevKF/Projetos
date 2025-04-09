@@ -224,3 +224,115 @@ input, textarea, select {
     margin-bottom: 2rem;
   }
 }
+/* === SEÇÃO DE SERVIÇOS APRIMORADA === */
+#servicos {
+    transition: opacity 0.5s ease;
+  }
+  
+  .service-card {
+    position: relative;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  
+  .service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
+  }
+  
+  .service-image-container {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .service-image-container img {
+    transition: transform 0.5s ease;
+  }
+  
+  .service-card:hover .service-image-container img {
+    transform: scale(1.1);
+  }
+  
+  /* Classes para animação JavaScript */
+  .service-card.opacity-0 {
+    opacity: 0;
+  }
+  
+  .service-card.translate-y-8 {
+    transform: translateY(32px);
+  }
+  
+  .service-card.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Botões de ação */
+  .service-card a {
+    transition: all 0.3s ease;
+  }
+  
+  .service-card a:hover {
+    transform: translateY(-2px);
+  }
+  
+  /* Efeito de onda no botão */
+  .ripple-effect {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.4);
+    width: 100px;
+    height: 100px;
+    margin-top: -50px;
+    margin-left: -50px;
+    animation: ripple 0.6s linear;
+    transform: scale(0);
+    opacity: 1;
+    pointer-events: none;
+  }
+  
+  @keyframes ripple {
+    to {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
+  
+  /* Smooth load-in animation for services */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  #servicos .service-card {
+    animation: fadeInUp 0.6s ease forwards;
+    opacity: 0;
+  }
+  
+  /* Sequência de animação para os cards */
+  #servicos .service-card:nth-child(1) { animation-delay: 0.1s; }
+  #servicos .service-card:nth-child(2) { animation-delay: 0.2s; }
+  #servicos .service-card:nth-child(3) { animation-delay: 0.3s; }
+  #servicos .service-card:nth-child(4) { animation-delay: 0.4s; }
+  #servicos .service-card:nth-child(5) { animation-delay: 0.5s; }
+  #servicos .service-card:nth-child(6) { animation-delay: 0.6s; }
+  
+  /* Estilo para o badge de destaque */
+  .service-card .bg-fatho-gold {
+    box-shadow: 0 2px 8px rgba(240, 173, 78, 0.5);
+  }
+  
+  /* Para criar uma grade escalável em telas maiores */
+  @media (min-width: 1280px) {
+    .grid-cols-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
