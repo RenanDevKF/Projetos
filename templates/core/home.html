@@ -150,34 +150,36 @@
     <!-- Agendamento -->
     <section class="py-16 bg-white">
         <div class="container mx-auto px-4 max-w-3xl">
-            <div class="bg-white rounded-lg shadow-md p-8">
+            <div class="bg-white rounded-lg shadow-md p-8 transition-transform duration-300 hover:shadow-lg hover:-translate-y-2">
                 <h2 class="text-3xl font-semibold text-center mb-8">Agende sua Sessão</h2>
-                <p class="text-center text-gray-700 mb-4">Facilite seu agendamento com nosso sistema online</p>
-                <p class="text-center text-gray-700 mb-8">Com nosso sistema, você pode:</p>
+                <p class="text-center text-gray-700 mb-4">Facilite seu agendamento enviando uma mensagem direta ao nosso WhatsApp</p>
+                <p class="text-center text-gray-700 mb-8">Clique no botão abaixo</p>
                 
                 <ul class="space-y-2 mb-8">
                     <li class="flex items-center">
                         <span class="text-green-500 mr-2">✓</span>
-                        <span>Selecionar serviços</span>
+                        <span>Veja os detalhes dos nossos serviços</span>
                     </li>
                     <li class="flex items-center">
                         <span class="text-green-500 mr-2">✓</span>
-                        <span>Verificar horários disponíveis</span>
+                        <span>Tire suas duvidas direto conosco</span>
                     </li>
                     <li class="flex items-center">
                         <span class="text-green-500 mr-2">✓</span>
-                        <span>Receber confirmação por e-mail/WhatsApp</span>
+                        <span>Receba sua confirmação de agendamento</span>
                     </li>
                 </ul>
                 
                 <div class="flex justify-center">
-                    <a href="{% url 'core:booking' %}" class="bg-fatho-gold hover:bg-fatho-gold/80 text-fatho-dark px-6 py-3 rounded font-medium">
-                        Agendar agora
+                    <a href="{% url 'core:booking' %}" 
+                    class="bg-fatho-gold hover:bg-fatho-gold/80 text-fatho-dark px-6 py-3 rounded font-medium transition-all transform hover:-translate-y-1">
+                    Agendar agora
                     </a>
                 </div>
             </div>
         </div>
     </section>
+
 
     <!-- Depoimentos -->
     <section id="depoimentos" class="py-16 bg-fatho-light">
