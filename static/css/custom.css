@@ -374,6 +374,7 @@ input, textarea, select {
     position: relative;
     width: 100%;
     margin: 0 auto;
+    overflow: hidden; /* Garante que os slides não vazem */
   }
 
   .testimonials-container {
@@ -384,6 +385,7 @@ input, textarea, select {
   .testimonials-track {
     display: flex;
     transition: transform 0.5s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    will-change: transform; /* Otimização de performance */
   }
 
   .testimonial-slide {
@@ -415,8 +417,7 @@ input, textarea, select {
     box-shadow: 0 12px 30px rgba(200, 169, 126, 0.2);
   }
 
-  .testimonial-card.active {
-    border: 2px solid var(--fatho-gold);
+  .testimonial-card.border-2 {
     box-shadow: 0 8px 25px rgba(200, 169, 126, 0.25);
   }
 
@@ -437,8 +438,7 @@ input, textarea, select {
   }
 
   /* Efeito de pulso para os dots do carrossel */
-  .testimonial-dot.active {
-    background-color: var(--fatho-gold);
+  .testimonial-dot.bg-fatho-gold {
     animation: pulse-dot 1.5s infinite;
   }
 
@@ -468,21 +468,19 @@ input, textarea, select {
     transform: scale(0.95);
   }
 
+  .testimonial-prev,
+  .testimonial-next {
+    cursor: pointer; /* Garante que o cursor seja de ponteiro */
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .testimonial-dot {
+    cursor: pointer; /* Garante que o cursor seja de ponteiro */
+  }
+
   /* Melhorias para dispositivos móveis */
   @media (max-width: 767px) {
     .testimonial-card {
       padding: 1.5rem;
     }
-  }
-
-  /* Efeito de aspas grifadas */
-  .quote-mark {
-    position: absolute;
-    top: 0;
-    left: 0;
-    opacity: 0.15;
-    color: var(--fatho-gold);
-    font-size: 4rem;
-    line-height: 1;
-    transform: translate(-25%, -25%);
   }

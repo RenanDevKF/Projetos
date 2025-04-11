@@ -253,7 +253,7 @@
                 
                 <!-- Navegação do carrossel -->
                 <div class="testimonials-nav flex justify-center mt-8 items-center">
-                    <button class="testimonial-prev p-2 text-fatho-gold hover:text-fatho-dark focus:outline-none transition-all" aria-label="Anterior">
+                    <button type="button" class="testimonial-prev p-2 text-fatho-gold hover:text-fatho-dark focus:outline-none transition-all" aria-label="Anterior">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                         </svg>
@@ -262,12 +262,12 @@
                     <div class="testimonials-dots flex space-x-2 mx-4">
                         {% for testimonial in testimonials %}
                             {% if forloop.counter <= 5 %}
-                            <button class="testimonial-dot w-3 h-3 rounded-full border border-fatho-gold {% if forloop.counter == 1 %}bg-fatho-gold{% else %}bg-transparent{% endif %} hover:bg-fatho-gold/50 transition-all" data-index="{{ forloop.counter0 }}" aria-label="Ir para depoimento {{ forloop.counter }}"></button>
+                            <button type="button" class="testimonial-dot w-3 h-3 rounded-full border border-fatho-gold {% if forloop.counter == 1 %}bg-fatho-gold{% else %}bg-transparent{% endif %} hover:bg-fatho-gold/50 transition-all" data-index="{{ forloop.counter0 }}" aria-label="Ir para depoimento {{ forloop.counter }}"></button>
                             {% endif %}
                         {% endfor %}
                     </div>
                     
-                    <button class="testimonial-next p-2 text-fatho-gold hover:text-fatho-dark focus:outline-none transition-all" aria-label="Próximo">
+                    <button type="button" class="testimonial-next p-2 text-fatho-gold hover:text-fatho-dark focus:outline-none transition-all" aria-label="Próximo">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                         </svg>
