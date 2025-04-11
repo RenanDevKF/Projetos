@@ -105,8 +105,9 @@ function initTestimonialsCarousel() {
         slides.forEach((slide, i) => {
             const card = slide.querySelector('.testimonial-card');
             if (card) {
-                card.classList.toggle('border-2', i === currentIndex);
-                card.classList.toggle('border-fatho-gold', i === currentIndex);
+                const middleIndex = currentIndex + Math.floor(slidesToShow / 2);
+                card.classList.toggle('border-2', i === middleIndex);
+                card.classList.toggle('border-fatho-gold', i === middleIndex);
             }
         });
 
