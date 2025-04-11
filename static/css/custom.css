@@ -409,14 +409,32 @@ input, textarea, select {
     display: flex;
     flex-direction: column;
     position: relative;
-    transition: all 0.3s ease;
-    transform: translateY(0);
+    transition: all 0.3s ease, transform 0.4s ease, box-shadow 0.4s ease, border 0.4s ease;
+    transform: translateY(0) scale(0.9);
+    opacity: 0.7;
+    border: 2px solid transparent;
   }
-
-  .testimonial-card:hover {
-    transform: translateY(-8px);
+  
+  /* Card central (ativo) */
+  .testimonial-card.active {
+    transform: translateY(0) scale(1.1);
+    opacity: 1;
+    border: 3px solid #C8A97E;
+    z-index: 10;
+    box-shadow: 0 12px 30px rgba(200, 169, 126, 0.3);
+  }
+  
+  /* Hover para os demais cards */
+  .testimonial-card:hover:not(.active) {
+    transform: translateY(-8px) scale(1);
     box-shadow: 0 12px 30px rgba(200, 169, 126, 0.2);
     z-index: 10;
+  }
+  
+  /* Hover para o card central */
+  .testimonial-card.active:hover {
+    transform: translateY(-8px) scale(1.1);
+    box-shadow: 0 14px 35px rgba(200, 169, 126, 0.35);
   }
 
   .testimonial-card.border-2 {
@@ -485,4 +503,11 @@ input, textarea, select {
     .testimonial-card {
       padding: 1.5rem;
     }
+  }
+
+  /* === INTERAÇÕES E COMPORTAMENTO GLOBAL === */
+
+  /* Navegação suave para âncoras */
+  html {
+    scroll-behavior: smooth;
   }
