@@ -90,6 +90,8 @@ function initTestimonialsCarousel() {
         slidesToShow = window.innerWidth >= 768 ? 3 : 1;
         slideWidth = slides[0].offsetWidth || containerWidth / slidesToShow;
         maxIndex = Math.max(0, slides.length - slidesToShow);
+        
+
     }
 
     function goToSlide(index) {
@@ -126,14 +128,24 @@ function initTestimonialsCarousel() {
     if (prevButton) {
         prevButton.addEventListener('click', e => {
             e.preventDefault();
-            if (currentIndex > 0) goToSlide(currentIndex - 1);
+            // Se estiver no início, vai pro final
+            if (currentIndex > 0) {
+                goToSlide(currentIndex - 1);
+            } else {
+                goToSlide(maxIndex); // Vai pro último
+            }
         });
     }
 
     if (nextButton) {
         nextButton.addEventListener('click', e => {
             e.preventDefault();
-            if (currentIndex < maxIndex) goToSlide(currentIndex + 1);
+            // Se estiver no final, volta para o começo
+            if (currentIndex < maxIndex) {
+                goToSlide(currentIndex + 1);
+            } else {
+                goToSlide(0); // Reinicia manualmente
+            }
         });
     }
 
