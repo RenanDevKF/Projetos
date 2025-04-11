@@ -1,0 +1,513 @@
+/* Arquivo para estilos customizados que vão além do Tailwind */
+
+/* Definindo cores personalizadas caso não estejam no tailwind.config */
+:root {
+  --fatho-mint: #d4e8d9;
+  --fatho-dark: #333333;
+  --fatho-gold: #c8a97e;
+  --fatho-light: #f5f9f6;
+}
+
+/* === HERO SECTION === */
+.hero-section,
+.bg-hero {
+  position: relative !important;
+  background-size: cover !important;
+  background-position: center !important;
+  height: 50vh !important;
+  min-height: 450px !important;
+  max-height: 550px !important;
+}
+
+.hero-section::before,
+.bg-hero::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6));
+  z-index: 1;
+}
+
+.hero-section > *,
+.bg-hero > * {
+  position: relative;
+  z-index: 2;
+}
+
+.hero-height {
+  height: 100vh !important;
+  min-height: 450px !important;
+  max-height: 550px !important;
+}
+
+/* === TRANSIÇÕES === */
+a, button {
+  transition: all 0.3s ease;
+}
+
+/* === BOTÃO MENU MOBILE === */
+#mobile-menu-button {
+  transition: transform 0.3s ease;
+}
+#mobile-menu-button:hover {
+  transform: scale(1.1);
+}
+
+/* === SCROLLBAR CUSTOMIZADA === */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f5f9f6;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--fatho-gold);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #b89868;
+}
+
+/* === FORMULÁRIOS === */
+input, textarea, select {
+  @apply border border-gray-300 rounded-md px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-fatho-gold/50 focus:border-transparent transition;
+}
+
+/* === SERVICE CARDS === */
+.service-card {
+  background-color: var(--fatho-mint);
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* === AVALIAÇÕES COM ESTRELAS === */
+.star-rating .star {
+  color: var(--fatho-gold);
+}
+.star-rating .star-empty {
+  color: #e2e8f0;
+}
+
+/* === TESTEMUNHOS / DEPOIMENTOS === */
+.testimonial-card {
+  transition: all 0.3s ease;
+}
+.testimonial-card:hover {
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* === PERFIL EM FORMATO PÍLULA === */
+.profile-pill {
+  display: inline-block;
+  position: relative;
+  width: 11rem; /* 176px */
+  height: 16rem; /* 256px */
+  border-radius: 40px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+.profile-pill img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.profile-pill:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(200, 169, 126, 0.3);
+}
+
+/* === CONTAINER DA PÍLULA DE PERFIL === */
+.profile-pill-container {
+  display: inline-block;
+  position: relative;
+  width: 11rem; /* 176px */
+  height: 16rem; /* 256px */
+  border-radius: 40px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.profile-pill-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(200, 169, 126, 0.3);
+}
+
+/* === RESPONSIVO PÍLULA === */
+@media (max-width: 768px) {
+  .profile-pill,
+  .profile-pill-container {
+    width: 10rem;
+    height: 12rem;
+    border-radius: 30px;
+  }
+}
+
+/* === NAVBAR LINKS === */
+.nav-links {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 0.5rem;
+}
+.nav-links a {
+  color: var(--fatho-dark);
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 0.25rem;
+  transition: all 0.3s ease;
+}
+.nav-links a:hover {
+  color: var(--fatho-gold);
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: var(--fatho-gold);
+  transition: width 0.3s ease;
+}
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+/* === IMAGEM DE PERFIL REDONDA === */
+.rounded-full.border-4 {
+  display: inline-block;
+  position: relative;
+  box-shadow: 0 0 15px rgba(200, 169, 126, 0.3);
+  transition: all 0.3s ease;
+}
+.rounded-full.border-4:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(200, 169, 126, 0.5);
+}
+
+/* === BOTÃO PULSANTE === */
+.btn-booking {
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(200, 169, 126, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(200, 169, 126, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(200, 169, 126, 0);
+  }
+}
+
+/* === ALINHAMENTO SOBRE === */
+.flex.items-center {
+  display: flex;
+  align-items: center;
+}
+
+/* === FLEX MOBILE === */
+@media (max-width: 768px) {
+  .flex.flex-col.md\:flex-row {
+    align-items: center;
+    text-align: center;
+  }
+
+  .flex.flex-col.md\:flex-row > div:first-child {
+    margin-bottom: 2rem;
+  }
+}
+/* === SEÇÃO DE SERVIÇOS APRIMORADA === */
+#servicos {
+    transition: opacity 0.5s ease;
+  }
+  
+  .service-card {
+    position: relative;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    height: 100%;
+    background-color: #e8f5e9; /* Cor verde menta claro semelhante à imagem */
+  }
+  
+  .service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
+  }
+  
+  .service-image-container {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .service-image-container img {
+    transition: transform 0.5s ease;
+  }
+  
+  .service-card:hover .service-image-container img {
+    transform: scale(1.1);
+  }
+  
+  /* Garantir altura mínima para o conteúdo */
+  .service-card .flex-1 {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Classes para animação JavaScript */
+  .service-card.opacity-0 {
+    opacity: 0;
+  }
+  
+  .service-card.translate-y-8 {
+    transform: translateY(32px);
+  }
+  
+  .service-card.animate-in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  /* Botões de ação */
+  .service-card a {
+    transition: all 0.3s ease;
+  }
+  
+  .service-card a:hover {
+    transform: translateY(-2px);
+  }
+  
+  /* Estilo para botão de consultar */
+  .service-card a:first-child {
+    background-color: white;
+    color: #333;
+    border: 1px solid #deb887;
+  }
+  
+  /* Estilo para botão de agendar */
+  .service-card a:last-child {
+    background-color: #deb887;
+    color: #333;
+  }
+  
+  /* Efeito de flutação no botão */
+  .hover-float {
+    transition: all 0.3s ease;
+  }
+  
+  .hover-float:hover {
+    transform: translateY(-2px);
+  }
+  
+  
+  /* Efeito de onda no botão */
+  .ripple-effect {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.4);
+    width: 100px;
+    height: 100px;
+    margin-top: -50px;
+    margin-left: -50px;
+    animation: ripple 0.6s linear;
+    transform: scale(0);
+    opacity: 1;
+    pointer-events: none;
+  }
+  
+  @keyframes ripple {
+    to {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
+  
+  /* Smooth load-in animation for services */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  #servicos .service-card {
+    animation: fadeInUp 0.6s ease forwards;
+    opacity: 0;
+  }
+  
+  /* Sequência de animação para os cards */
+  #servicos .service-card:nth-child(1) { animation-delay: 0.1s; }
+  #servicos .service-card:nth-child(2) { animation-delay: 0.2s; }
+  #servicos .service-card:nth-child(3) { animation-delay: 0.3s; }
+  #servicos .service-card:nth-child(4) { animation-delay: 0.4s; }
+  #servicos .service-card:nth-child(5) { animation-delay: 0.5s; }
+  #servicos .service-card:nth-child(6) { animation-delay: 0.6s; }
+  
+  /* Para criar uma grade escalável em telas maiores */
+  @media (min-width: 1280px) {
+    .grid-cols-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  
+  /* Garantir que todos os cards tenham a mesma altura */
+  .grid {
+    display: grid;
+    grid-auto-rows: 1fr;
+  }
+
+  /* === DEPOIMENTOS CARROSSEL === */
+  .testimonials-carousel {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    overflow: visible; /* Garante que os slides não vazem */
+  }
+
+  .testimonials-container {
+    width: 100%;
+    overflow: visible;
+    position:relative;
+  }
+
+  .testimonials-track {
+    display: flex;
+    transition: transform 0.5s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    will-change: transform; /* Otimização de performance */
+  }
+
+  .testimonial-slide {
+    flex-shrink: 0;
+    padding: 0 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .testimonial-slide {
+      width: 33.333333%;
+    }
+  }
+
+  .testimonial-card {
+    height: 100%;
+    background: white;
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: all 0.3s ease, transform 0.4s ease, box-shadow 0.4s ease, border 0.4s ease;
+    transform: translateY(0) scale(0.9);
+    opacity: 0.7;
+    border: 2px solid transparent;
+  }
+  
+  /* Card central (ativo) */
+  .testimonial-card.active {
+    transform: translateY(0) scale(1.1);
+    opacity: 1;
+    border: 3px solid #C8A97E;
+    z-index: 10;
+    box-shadow: 0 12px 30px rgba(200, 169, 126, 0.3);
+  }
+  
+  /* Hover para os demais cards */
+  .testimonial-card:hover:not(.active) {
+    transform: translateY(-8px) scale(1);
+    box-shadow: 0 12px 30px rgba(200, 169, 126, 0.2);
+    z-index: 10;
+  }
+  
+  /* Hover para o card central */
+  .testimonial-card.active:hover {
+    transform: translateY(-8px) scale(1.1);
+    box-shadow: 0 14px 35px rgba(200, 169, 126, 0.35);
+  }
+
+  .testimonial-card.border-2 {
+    box-shadow: 0 8px 25px rgba(200, 169, 126, 0.25);
+  }
+
+  /* Animação para o carrossel */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .testimonial-slide {
+    animation: fadeIn 0.5s ease forwards;
+  }
+
+  /* Efeito de pulso para os dots do carrossel */
+  .testimonial-dot.bg-fatho-gold {
+    animation: pulse-dot 1.5s infinite;
+  }
+
+  @keyframes pulse-dot {
+    0% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(200, 169, 126, 0.7);
+    }
+    70% {
+      transform: scale(1.1);
+      box-shadow: 0 0 0 6px rgba(200, 169, 126, 0);
+    }
+    100% {
+      transform: scale(1);
+      box-shadow: 0 0 0 0 rgba(200, 169, 126, 0);
+    }
+  }
+
+  /* Efeito para os botões de navegação */
+  .testimonial-prev:hover,
+  .testimonial-next:hover {
+    transform: scale(1.2);
+  }
+
+  .testimonial-prev:active,
+  .testimonial-next:active {
+    transform: scale(0.95);
+  }
+
+  .testimonial-prev,
+  .testimonial-next {
+    cursor: pointer; /* Garante que o cursor seja de ponteiro */
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+
+  .testimonial-dot {
+    cursor: pointer; /* Garante que o cursor seja de ponteiro */
+  }
+
+  /* Melhorias para dispositivos móveis */
+  @media (max-width: 767px) {
+    .testimonial-card {
+      padding: 1.5rem;
+    }
+  }
+
+  /* === INTERAÇÕES E COMPORTAMENTO GLOBAL === */
+
+  /* Navegação suave para âncoras */
+  html {
+    scroll-behavior: smooth;
+  }

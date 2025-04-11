@@ -15,7 +15,10 @@
         <div class="container mx-auto px-4 py-4 flex justify-between items-center">
             <div class="flex items-center">
                 <a href="{% url 'core:home' %}" class="flex items-center">
-                    <img src="{% static 'images/logo.png' %}" alt="Fatho Massoterapia" class="h-12">
+                    <div class="bg-white rounded-full w-12 h-12 flex items-center justify-center">
+                        <span class="text-fatho-dark font-bold">F</span>
+                    </div>
+                    <span class="ml-2 text-lg font-semibold">Fatho Massoterapia</span>
                 </a>
             </div>
             
@@ -24,6 +27,7 @@
                 <a href="{% url 'core:about' %}" class="text-fatho-dark hover:text-primary transition">Sobre</a>
                 <a href="{% url 'core:services' %}" class="text-fatho-dark hover:text-primary transition">Serviços</a>
                 <a href="{% url 'core:contact' %}" class="text-fatho-dark hover:text-primary transition">Contato</a>
+                <a href="{% url 'core:booking' %}" class="bg-fatho-gold hover:bg-fatho-gold/80 text-fatho-dark px-4 py-2 rounded transition">Agendar</a>
             </nav>
             
             <div class="md:hidden">
@@ -42,6 +46,7 @@
                 <a href="{% url 'core:about' %}" class="text-fatho-dark hover:text-primary transition">Sobre</a>
                 <a href="{% url 'core:services' %}" class="text-fatho-dark hover:text-primary transition">Serviços</a>
                 <a href="{% url 'core:contact' %}" class="text-fatho-dark hover:text-primary transition">Contato</a>
+                <a href="{% url 'core:booking' %}" class="bg-fatho-gold hover:bg-fatho-gold/80 text-fatho-dark px-4 py-2 rounded inline-block transition">Agendar</a>
             </div>
         </div>
     </header>
@@ -55,24 +60,32 @@
     <footer class="bg-fatho-dark text-white py-12">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="flex flex-col items-center md:items-start">
+                    <div class="bg-white rounded-full w-12 h-12 flex items-center justify-center mb-4">
+                        <span class="text-fatho-dark font-bold">F</span>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Fatho Massoterapia</h3>
+                    <p class="text-sm text-center md:text-left">Transformando vidas através do toque terapêutico desde 2013.</p>
+                </div>
                 <div>
-                    <img src="{% static 'images/logo-white.png' %}" alt="Fatho Massoterapia" class="h-12 mb-4">
-                    <p class="text-sm">Massoterapia profissional para saúde e bem-estar.</p>
+                    <h3 class="text-lg font-semibold mb-4">Links Rápidos</h3>
+                    <ul class="space-y-2">
+                        <li><a href="{% url 'core:home' %}" class="hover:text-fatho-gold transition">Início</a></li>
+                        <li><a href="{% url 'core:about' %}" class="hover:text-fatho-gold transition">Sobre</a></li>
+                        <li><a href="{% url 'core:services' %}" class="hover:text-fatho-gold transition">Serviços</a></li>
+                        <li><a href="{% url 'core:contact' %}" class="hover:text-fatho-gold transition">Contato</a></li>
+                        <li><a href="{% url 'core:booking' %}" class="hover:text-fatho-gold transition">Agendamento</a></li>
+                    </ul>
                 </div>
                 <div>
                     <h3 class="text-lg font-semibold mb-4">Contato</h3>
-                    <p class="mb-2">Email: contato@fatho.com.br</p>
-                    <p class="mb-2">Telefone: (00) 00000-0000</p>
-                    <p>Endereço: Rua Exemplo, 123 - Cidade, Estado</p>
-                </div>
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Links</h3>
-                    <ul class="space-y-2">
-                        <li><a href="{% url 'core:home' %}" class="hover:text-primary transition">Início</a></li>
-                        <li><a href="{% url 'core:about' %}" class="hover:text-primary transition">Sobre</a></li>
-                        <li><a href="{% url 'core:services' %}" class="hover:text-primary transition">Serviços</a></li>
-                        <li><a href="{% url 'core:contact' %}" class="hover:text-primary transition">Contato</a></li>
-                    </ul>
+                    <p class="mb-2">contato@fathomassagens.com.br</p>
+                    <p class="mb-4">(11) 99765-4321</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="hover:text-fatho-gold transition">Instagram</a>
+                        <a href="#" class="hover:text-fatho-gold transition">Facebook</a>
+                        <a href="#" class="hover:text-fatho-gold transition">WhatsApp</a>
+                    </div>
                 </div>
             </div>
             <div class="border-t border-gray-700 mt-8 pt-8 text-center text-sm">
@@ -87,5 +100,6 @@
             document.getElementById('mobile-menu').classList.toggle('hidden');
         });
     </script>
+    <script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>

@@ -4,85 +4,311 @@
 {% block title %}Início - Fatho Massoterapia{% endblock %}
 
 {% block content %}
-    <!-- Hero Section -->
-    <section class="bg-gradient-to-r from-fatho-mint to-fatho-light py-20">
-        <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row items-center">
-                <div class="md:w-1/2 mb-10 md:mb-0">
-                    <h1 class="text-4xl md:text-5xl font-bold text-fatho-dark mb-4">Massoterapia Profissional</h1>
-                    <p class="text-lg md:text-xl mb-6">Cuide do seu bem-estar com tratamentos personalizados para corpo e mente.</p>
-                    <a href="{% url 'core:services' %}" class="bg-primary text-white px-6 py-3 rounded-md hover:bg-primary/90 transition">Conheça nossos serviços</a>
-                </div>
-                <div class="md:w-1/2 flex justify-center">
-                    <img src="{% static 'images/massage-hero.jpg' %}" alt="Massoterapia" class="rounded-lg shadow-lg max-w-full h-auto">
+    <!-- Hero Section com imagem de fundo -->
+    <section class="relative bg-cover bg-center hero-height" style="background-image: url('{% static 'img/massage-hero.jpg' %}'); background-position: center top 40%; height: 50vh !important; min-height: 450px !important; max-height: 550px !important; display: flex; align-items: center;">
+        <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+        
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center text-white">
+                <h1 class="text-5xl font-bold mb-2">Fatho Massoterapia</h1>
+                <p class="text-xl mb-8 max-w-2xl mx-auto">Transforme sua saúde e bem-estar através do poder do toque terapêutico</p>
+                <div class="flex flex-wrap gap-4 justify-center">
+                    <a href="{% url 'core:booking' %}" class="bg-fatho-gold hover:bg-fatho-gold/80 text-fatho-dark px-6 py-3 rounded font-medium">Agendar Consulta</a>
+                    <a href="{% url 'core:services' %}" class="bg-transparent border-fatho-gold border text-white hover:bg-fatho-gold/20 px-6 py-3 rounded font-medium">Nossos Serviços</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Serviços em Destaque -->
-    <section class="py-16 bg-white">
+
+    <!-- Sobre Fatho -->
+    <section class="py-20 bg-fatho-light">
+        <div class="container mx-auto px-4 text-center mb-12">
+          <h2 class="text-4xl font-bold text-fatho-dark mb-3">
+            Sobre a Fatho
+          </h2>
+          <div class="w-24 h-1 bg-fatho-gold mx-auto mb-6"></div>
+
+    <!-- Wrapper geral com espaçamento maior -->
+    <div class="flex flex-col md:flex-row items-center md:items-start justify-center max-w-3xl mx-auto gap-2">
+
+
+      <!-- Imagem -->
+      <div class="w-40 h-60 rounded-full overflow-hidden shadow-xl border-4 border-fatho-dark flex-shrink-0 mb-10 md:mb-0 md:mr-12">
+
+        <img src="{% static 'img/profile.jpg' %}" alt="Foto de Frederico" class="object-cover w-full h-full">
+      </div>
+
+      <!-- Texto com espaçamento garantido -->
+      <div class="flex flex-col justify-center text-left text-fatho-dark text-lg leading-relaxed max-w-2xl">
+        <p class="mb-4">
+          Com mais de 10 anos de experiência, Frederico é especialista em técnicas de massagem terapêutica e relaxante.<br><br>
+          Formado pela Escola Brasileira de Massoterapia, ele combina conhecimentos de medicina oriental e ocidental<br>
+          para proporcionar o melhor tratamento personalizado para cada cliente.
+        </p>
+        <p>
+          Sua abordagem holística considera não apenas os sintomas físicos,<br>
+          mas também aspectos emocionais e energéticos,<br><br>
+          proporcionando um tratamento verdadeiramente completo e transformador.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+  
+
+    <!-- Navegação de Serviços -->
+    <section class="py-px bg-white">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-semibold text-center mb-12">Nossos Serviços</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {% for service in featured_services %}
-                <div class="bg-fatho-light rounded-lg shadow-md overflow-hidden">
-                    <img src="{{ service.image.url }}" alt="{{ service.name }}" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">{{ service.name }}</h3>
-                        <p class="text-gray-700 mb-4">{{ service.short_description }}</p>
-                        <a href="{% url 'service_detail' service.slug %}" class="text-primary font-medium hover:underline">Saiba mais</a>
-                    </div>
-                </div>
-                {% endfor %}
+            <div class="nav-links">
+                <a href="#servicos">Serviços</a>
+                <a href="#depoimentos">Depoimentos</a>
+                <a href="#contato">Contato</a>
             </div>
         </div>
     </section>
 
-    <!-- Chamada para Agendamento -->
-    <section class="bg-fatho-gold/10 py-16">
-        <div class="container mx-auto px-4 text-center">
-            <h2 class="text-3xl font-semibold mb-4">Agende sua sessão hoje!</h2>
-            <p class="text-lg mb-8 max-w-3xl mx-auto">Experimente os benefícios da massoterapia profissional. Agende uma consulta e comece sua jornada para uma vida mais saudável e equilibrada.</p>
-            <a href="{% url 'core:booking' %}" class="bg-primary text-white px-6 py-3 rounded-md hover:bg-primary/90 transition">Agendar agora</a>
-        </div>
-    </section>
-
-    <!-- Depoimentos -->
-    <section class="py-16 bg-white">
+    <!-- Serviços -->
+    <section id="servicos" class="py-20 bg-fatho-light">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-semibold text-center mb-12">O que nossos clientes dizem</h2>
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-semibold mb-3">Nossos Serviços</h2>
+                <div class="w-24 h-1 bg-fatho-gold mx-auto mb-6"></div>
+                <p class="text-gray-700 max-w-2xl mx-auto">Descubra os tratamentos que oferecemos para seu bem-estar e relaxamento. Cada serviço é personalizado para atender às suas necessidades específicas.</p>
+            </div>
+            
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {% for testimonial in testimonials %}
-                <div class="bg-fatho-light p-6 rounded-lg shadow-sm">
-                    <div class="flex items-center mb-4">
-                        {% if testimonial.client_image %}
-                        <img src="{{ testimonial.client_image.url }}" alt="{{ testimonial.client_name }}" class="w-12 h-12 rounded-full mr-4">
-                        {% else %}
-                        <div class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center mr-4">
-                            {{ testimonial.client_name|first }}
+                {% for service in featured_services %}
+                <div class="service-card group bg-mint-100 rounded-lg overflow-hidden transform transition-all duration-300 hover:-translate-y-2 flex flex-col h-full">
+                    {% if service.image %}
+                    <div class="service-image-container overflow-hidden h-52">
+                        <img src="{{ service.image.url }}" alt="{{ service.name }}" class="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-110">
+                    </div>
+                    {% endif %}
+                    
+                    {% if service.featured %}
+                    <div class="absolute top-4 left-0 bg-fatho-gold text-fatho-dark px-4 py-1 text-sm font-semibold">
+                        Destaque
+                    </div>
+                    {% endif %}
+                    
+                    <div class="p-6 flex-1 flex flex-col">
+                        <div class="flex-1">
+                            <h3 class="text-2xl font-semibold leading-none tracking-tight mb-3">{{ service.name }}</h3>
+                            <p class="text-gray-700 mb-4">{{ service.short_description }}</p>
                         </div>
-                        {% endif %}
-                        <div>
-                            <h4 class="font-semibold">{{ testimonial.client_name }}</h4>
-                            <div class="flex text-fatho-gold">
-                                {% for i in "12345" %}
-                                    {% if forloop.counter <= testimonial.rating %}
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z" />
-                                    </svg>
-                                    {% else %}
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-300" viewBox="0 0 20 20" fill="currentColor">
-                                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z" />
-                                    </svg>
-                                    {% endif %}
-                                {% endfor %}
+                        
+                        <div class="mt-auto">
+                            <div class="flex items-center text-gray-500 mb-4">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-fatho-gold" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="12" cy="12" r="10"></circle>
+                                    <polyline points="12 6 12 12 16 14"></polyline>
+                                </svg>
+                                <span>{{ service.duration }} min</span>
+                            </div>
+                            
+                            {% if service.price %}
+                            <div class="text-xl font-bold text-fatho-dark mb-4">
+                                R$ {{ service.price }}
+                            </div>
+                            {% endif %}
+                            
+                            <div class="flex space-x-3">
+                                <a href="{% url 'core:services' %}" 
+                                class="bg-white hover:bg-gray-50 text-fatho-dark border border-fatho-gold flex-1 py-2 rounded-md inline-flex items-center justify-center transition-all font-medium">
+                                    Consultar
+                                </a>
+                                <a href="{% url 'core:booking' %}?service={{ service.id }}" 
+                                class="bg-fatho-gold hover:bg-fatho-gold/90 text-fatho-dark flex-1 py-2 rounded-md inline-flex items-center justify-center transition-all font-medium">
+                                    Agendar
+                                </a>
                             </div>
                         </div>
                     </div>
-                    <p class="text-gray-700">{{ testimonial.content }}</p>
+                </div>
+                {% empty %}
+                <div class="text-center text-gray-600">
+                    Nenhum serviço destacado no momento.
                 </div>
                 {% endfor %}
+            </div>
+        
+            <div class="text-center mt-12">
+                <a href="{% url 'core:services' %}" 
+                class="hover-float ripple-btn inline-flex items-center px-8 py-3 bg-fatho-gold text-fatho-dark font-medium rounded-md hover:bg-fatho-gold/90 transition-all">
+                    Ver todos os serviços
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M5 12h14"></path>
+                        <path d="M12 5l7 7-7 7"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Agendamento -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4 max-w-3xl">
+            <div class="bg-white rounded-lg shadow-md p-8 transition-transform duration-300 hover:shadow-lg hover:-translate-y-2">
+                <h2 class="text-3xl font-semibold text-center mb-8">Agende sua Sessão</h2>
+                <p class="text-center text-gray-700 mb-4">Facilite seu agendamento enviando uma mensagem direta ao nosso WhatsApp</p>
+                <p class="text-center text-gray-700 mb-8">Clique no botão abaixo</p>
+                
+                <ul class="space-y-2 mb-8">
+                    <li class="flex items-center">
+                        <span class="text-green-500 mr-2">✓</span>
+                        <span>Veja os detalhes dos nossos serviços</span>
+                    </li>
+                    <li class="flex items-center">
+                        <span class="text-green-500 mr-2">✓</span>
+                        <span>Tire suas duvidas direto conosco</span>
+                    </li>
+                    <li class="flex items-center">
+                        <span class="text-green-500 mr-2">✓</span>
+                        <span>Receba sua confirmação de agendamento</span>
+                    </li>
+                </ul>
+                
+                <div class="flex justify-center">
+                    <a href="https://wa.link/wa6z4b"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="bg-[#25D366] hover:bg-[#1EBE5D] text-white px-6 py-3 rounded font-medium transition-all transform hover:-translate-y-1 inline-flex items-center gap-2 shadow-lg">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                       <path d="M20.52 3.48A11.76 11.76 0 0 0 12.04.25a11.76 11.76 0 0 0-9.53 18.48L.24 24l5.43-2.26a11.76 11.76 0 0 0 6.37 1.84h.01c6.45 0 11.7-5.24 11.7-11.7 0-3.12-1.22-6.05-3.23-8.15zM12.05 21.5a9.44 9.44 0 0 1-4.82-1.32l-.35-.21-3.22 1.34.86-3.13-.21-.32a9.44 9.44 0 0 1-1.48-5.08c0-5.23 4.26-9.48 9.49-9.48 2.53 0 4.91.99 6.7 2.79a9.43 9.43 0 0 1-6.97 15.41zm5.47-7.11c-.3-.15-1.77-.87-2.05-.97-.27-.1-.47-.15-.66.15-.2.3-.76.97-.93 1.17-.17.2-.34.22-.64.07-.3-.15-1.28-.47-2.43-1.5a9.14 9.14 0 0 1-1.7-2.1c-.18-.3-.02-.46.14-.6.14-.13.3-.34.45-.5.15-.17.2-.3.3-.5.1-.2.05-.38-.02-.53-.07-.15-.66-1.6-.9-2.2-.23-.53-.47-.45-.66-.45l-.56-.01a1.1 1.1 0 0 0-.8.38c-.27.3-1.03 1-1.03 2.45s1.06 2.84 1.2 3.04c.15.2 2.09 3.2 5.07 4.49.71.31 1.26.5 1.7.64.72.23 1.37.2 1.89.12.58-.09 1.77-.72 2.02-1.42.25-.7.25-1.29.18-1.42-.07-.13-.27-.2-.57-.35z"/>
+                    </svg>
+                    Agendar no WhatsApp
+                 </a>               
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- HTML atualizado para a seção de depoimentos -->
+    <section id="depoimentos" class="py-16 bg-fatho-light">
+        <div class="container mx-auto px-4">
+            <!-- Cabeçalho com ícone de aspas -->
+            <div class="text-center mb-12">
+                <svg class="w-10 h-10 text-fatho-gold mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                </svg>
+                <h2 class="text-3xl font-semibold text-center">O que nossos clientes dizem</h2>
+                <p class="text-gray-600 mt-2">Conheça as experiências transformadoras dos nossos clientes com os tratamentos de massoterapia</p>
+            </div>
+            
+            <!-- Container do carrossel -->
+            <div class="testimonials-carousel relative">
+                <div class="testimonials-container overflow-visible">
+                    <div class="testimonials-track flex transition-transform duration-500 ease-out">
+                        {% for testimonial in testimonials %}
+                        <div class="testimonial-slide flex-shrink-0 w-full md:w-1/3 px-4">
+                            <div class="testimonial-card bg-white p-8 rounded-lg shadow-md h-full flex flex-col">
+                                <!-- Foto e informações -->
+                                <div class="flex items-center mb-4">
+                                    {% if testimonial.photo %}
+                                    <img src="{{ testimonial.photo.url }}" alt="{{ testimonial.name }}" class="w-14 h-14 rounded-full object-cover border-2 border-fatho-gold">
+                                    {% else %}
+                                    <div class="w-14 h-14 rounded-full bg-fatho-mint text-fatho-dark flex items-center justify-center text-xl font-semibold border-2 border-fatho-gold">
+                                        {{ testimonial.name|first }}
+                                    </div>
+                                    {% endif %}
+                                    <div class="ml-4">
+                                        <h4 class="font-semibold text-lg">{{ testimonial.name }}</h4>
+                                        <div class="flex text-fatho-gold mt-1">
+                                            {% for i in "12345" %}
+                                                {% if forloop.counter <= testimonial.rating %}
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z" />
+                                                </svg>
+                                                {% else %}
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-300" viewBox="0 0 20 20" fill="currentColor">
+                                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118l-2.8-2.034c-.783-.57-.38-1.81.588-1.81h3.462a1 1 0 00.95-.69l1.07-3.292z" />
+                                                </svg>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Texto do depoimento com aspas decorativas -->
+                                <div class="relative flex-1">
+                                    <svg class="absolute left-0 top-0 w-6 h-6 text-fatho-gold opacity-20 transform -translate-y-3 -translate-x-2" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                                    </svg>
+                                    <p class="text-gray-700 italic">{{ testimonial.comment }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="text-center text-gray-600 w-full py-8">
+                            <svg class="w-12 h-12 mx-auto text-gray-400 mb-3" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                            </svg>
+                            <p>Nenhum depoimento destacado no momento.</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                
+                <!-- Navegação do carrossel -->
+                <div class="testimonials-nav flex justify-center mt-8 items-center">
+                    <button type="button" class="testimonial-prev p-2 text-fatho-gold hover:text-fatho-dark focus:outline-none transition-all" aria-label="Anterior">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </button>
+                    
+                    <div class="testimonials-dots flex space-x-2 mx-4">
+                        {% for testimonial in testimonials %}
+                            {% if forloop.counter <= 5 %}
+                            <button type="button" class="testimonial-dot w-3 h-3 rounded-full border border-fatho-gold {% if forloop.counter == 1 %}bg-fatho-gold{% else %}bg-transparent{% endif %} hover:bg-fatho-gold/50 transition-all" data-index="{{ forloop.counter0 }}" aria-label="Ir para depoimento {{ forloop.counter }}"></button>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                    
+                    <button type="button" class="testimonial-next p-2 text-fatho-gold hover:text-fatho-dark focus:outline-none transition-all" aria-label="Próximo">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contato Rápido -->
+    <section id="contato" class="py-16 bg-white">
+        <div class="container mx-auto px-4 max-w-3xl">
+            <div class="bg-white rounded-lg shadow-md p-8">
+                <h2 class="text-3xl font-semibold text-center mb-8">Entre em Contato</h2>
+                <p class="text-center text-gray-700 mb-8">Estamos prontos para responder suas dúvidas e ajudar no que for preciso.</p>
+                
+                <div class="flex flex-col md:flex-row justify-around items-center mb-8 space-y-4 md:space-y-0">
+                    <div class="text-center">
+                        <div class="bg-fatho-mint/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                            </svg>
+                        </div>
+                        <p class="font-medium">(11) 99765-4321</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="bg-fatho-mint/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                        </div>
+                        <p class="font-medium">contato@fathomassagens.com.br</p>
+                    </div>
+                </div>
+                
+                <div class="flex justify-center">
+                    <a href="{% url 'core:contact' %}" class="bg-fatho-gold hover:bg-fatho-gold/80 text-fatho-dark px-6 py-3 rounded font-medium">
+                        Enviar Mensagem
+                    </a>
+                </div>
             </div>
         </div>
     </section>
