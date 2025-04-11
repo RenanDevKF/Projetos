@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     initServiceCardsAnimation();
     initRippleEffect();
     initScrollTrigger();
-    initSmoothScrollToTestimonials();
+    initSmoothScrollLinks();
     initTestimonialsCarousel();
 });
 
@@ -55,13 +55,14 @@ function initScrollTrigger() {
     });
 }
 
-// === NAVEGAÇÃO SUAVE PARA DEPOIMENTOS ===
-function initSmoothScrollToTestimonials() {
-    document.querySelectorAll('a[href="#depoimentos"]').forEach(link => {
+// === NAVEGAÇÃO SUAVE PARA TODOS ===
+function initSmoothScrollLinks() {
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
         link.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.getElementById('depoimentos');
+            const targetId = this.getAttribute('href').substring(1);
+            const target = document.getElementById(targetId);
             if (target) {
+                e.preventDefault();
                 target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         });
