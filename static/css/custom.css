@@ -374,12 +374,12 @@ input, textarea, select {
     position: relative;
     width: 100%;
     margin: 0 auto;
-    overflow: hidden; /* Garante que os slides não vazem */
+    overflow: visible; /* Garante que os slides não vazem */
   }
 
   .testimonials-container {
     width: 100%;
-    overflow: hidden;
+    overflow: visible;
     position:relative;
   }
 
@@ -408,6 +408,7 @@ input, textarea, select {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     display: flex;
     flex-direction: column;
+    position: relative;
     transition: all 0.3s ease;
     transform: translateY(0);
   }
@@ -415,6 +416,7 @@ input, textarea, select {
   .testimonial-card:hover {
     transform: translateY(-8px);
     box-shadow: 0 12px 30px rgba(200, 169, 126, 0.2);
+    z-index: 10;
   }
 
   .testimonial-card.border-2 {
