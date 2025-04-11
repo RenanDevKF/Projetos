@@ -1,28 +1,35 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Animação ao rolar para elementos com a classe 'service-card'
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -100px 0px'
-    };
+document.addEventListener('DOMContentLoaded', function () {
+    initServiceCardsAnimation();
+    initRippleEffect();
+    initScrollTrigger();
+    initSmoothScrollToTestimonials();
+    initTestimonialsCarousel();
+});
 
-    const observer = new IntersectionObserver((entries) => {
+// === ANIMAÇÃO DOS CARDS DE SERVIÇO ===
+function initServiceCardsAnimation() {
+    const observer = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('animate-in');
                 observer.unobserve(entry.target);
             }
         });
-    }, observerOptions);
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -100px 0px'
+    });
 
-    // Observar todos os cartões de serviço
     document.querySelectorAll('.service-card').forEach(card => {
         card.classList.add('opacity-0', 'translate-y-8');
         observer.observe(card);
     });
+}
 
-    // Efeito de onda ao clicar nos botões
+// === EFEITO DE CLIQUE COM ONDA ===
+function initRippleEffect() {
     document.querySelectorAll('.service-card a').forEach(button => {
-        button.addEventListener('click', function(e) {
+        button.addEventListener('click', function (e) {
             const rect = button.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
@@ -33,250 +40,179 @@ document.addEventListener('DOMContentLoaded', function() {
             ripple.style.top = `${y}px`;
 
             button.appendChild(ripple);
-
-            setTimeout(() => {
-                ripple.remove();
-            }, 600);
+            setTimeout(() => ripple.remove(), 600);
         });
     });
-    
-    // Adicionar classe para animação ao rolar
-    document.addEventListener('scroll', function() {
-        const servicesSection = document.getElementById('servicos');
-        if (servicesSection) {
-            const sectionPosition = servicesSection.getBoundingClientRect().top;
-            const screenPosition = window.innerHeight / 1.3;
+}
 
-            if (sectionPosition < screenPosition) {
-                servicesSection.classList.add('services-active');
-            }
+// === ANIMAÇÃO AO ROLAR ATÉ SEÇÃO DE SERVIÇOS ===
+function initScrollTrigger() {
+    document.addEventListener('scroll', () => {
+        const section = document.getElementById('servicos');
+        if (section && section.getBoundingClientRect().top < window.innerHeight / 1.3) {
+            section.classList.add('services-active');
         }
     });
+}
 
-    // Inicialização do carrossel de depoimentos
-    initTestimonialsCarousel();
-    
-    // Função para inicializar o carrossel
-    function initTestimonialsCarousel() {
-        const track = document.querySelector('.testimonials-track');
-        const slides = document.querySelectorAll('.testimonial-slide');
-        const dots = document.querySelectorAll('.testimonial-dot');
-        const prevButton = document.querySelector('.testimonial-prev');
-        const nextButton = document.querySelector('.testimonial-next');
-        
-        if (!track || slides.length === 0) {
-            console.log("Carrossel não encontrado ou sem slides");
-            return;
-        }
-        
-        let currentIndex = 0;
-        let slideWidth;
-        let slidesToShow;
-        let maxIndex;
-        
-        // Função para calcular as dimensões iniciais
-        function calculateDimensions() {
-            // Precisamos verificar se os slides têm um pai visível
-            if (slides[0].offsetWidth === 0) {
-                // Se o slide não tiver largura, provavelmente está oculto ou não renderizado completamente
-                // Vamos usar o offsetWidth do container e dividir pelo número de slides visíveis
-                const container = document.querySelector('.testimonials-container');
-                const containerWidth = container ? container.offsetWidth : 0;
-                slidesToShow = window.innerWidth >= 768 ? 3 : 1;
-                slideWidth = containerWidth / slidesToShow;
-            } else {
-                slideWidth = slides[0].offsetWidth;
-                slidesToShow = window.innerWidth >= 768 ? 3 : 1;
-            }
-            
-            maxIndex = Math.max(0, slides.length - slidesToShow);
-            
-            console.log(`Calculado: slideWidth=${slideWidth}, slidesToShow=${slidesToShow}, maxIndex=${maxIndex}`);
-        }
-        
-        // Função para atualizar largura dos slides em caso de redimensionamento
-        function updateSlideWidth() {
-            calculateDimensions();
-            
-            // Reposiciona o carrossel após redimensionamento
-            goToSlide(Math.min(currentIndex, maxIndex));
-        }
-        
-        // Função para ir para o slide específico
-        function goToSlide(index) {
-            currentIndex = index;
-            const translateX = currentIndex * slideWidth;
-            console.log(`Movendo para slide ${index}, translateX=${translateX}px`);
-            
-            // Usar requestAnimationFrame para garantir animação suave
-            requestAnimationFrame(() => {
-                track.style.transform = `translateX(-${translateX}px)`;
-                
-                // Atualiza dots
-                dots.forEach((dot, i) => {
-                    dot.classList.toggle('bg-fatho-gold', i === currentIndex);
-                    dot.classList.toggle('bg-transparent', i !== currentIndex);
-                });
-                
-                // Destaca cartão ativo (para visualização mobile)
-                slides.forEach((slide, i) => {
-                    const card = slide.querySelector('.testimonial-card');
-                    if (card) {
-                        card.classList.toggle('border-2', i === currentIndex);
-                        card.classList.toggle('border-fatho-gold', i === currentIndex);
-                    }
-                });
-                
-                // Desabilita botões de navegação quando necessário
-                if (prevButton) prevButton.classList.toggle('opacity-50', currentIndex === 0);
-                if (nextButton) nextButton.classList.toggle('opacity-50', currentIndex === maxIndex);
-            });
-        }
-        
-        // Event Listeners para os controles
-        if (prevButton) {
-            prevButton.addEventListener('click', function(e) {
-                e.preventDefault();
-                console.log("Botão Anterior clicado");
-                if (currentIndex > 0) {
-                    goToSlide(currentIndex - 1);
-                }
-            });
-        }
-        
-        if (nextButton) {
-            nextButton.addEventListener('click', function(e) {
-                e.preventDefault();
-                console.log("Botão Próximo clicado");
-                if (currentIndex < maxIndex) {
-                    goToSlide(currentIndex + 1);
-                }
-            });
-        }
-        
-        // Event Listeners para os dots (paginação)
-        dots.forEach((dot, i) => {
-            dot.addEventListener('click', function(e) {
-                e.preventDefault();
-                console.log(`Dot ${i} clicado`);
-                goToSlide(Math.min(i, maxIndex));
-            });
-        });
-        
-        // Event Listener para swipe em dispositivos móveis
-        let touchStartX = 0;
-        let touchEndX = 0;
-        
-        track.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-        }, { passive: true });
-        
-        track.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        }, { passive: true });
-        
-        function handleSwipe() {
-            const swipeThreshold = 50; // mínimo de pixels para considerar um swipe
-            
-            if (touchStartX - touchEndX > swipeThreshold) {
-                // Swipe para a esquerda - próximo slide
-                if (currentIndex < maxIndex) {
-                    goToSlide(currentIndex + 1);
-                }
-            } else if (touchEndX - touchStartX > swipeThreshold) {
-                // Swipe para a direita - slide anterior
-                if (currentIndex > 0) {
-                    goToSlide(currentIndex - 1);
-                }
-            }
-        }
-        
-        // Atualiza a largura dos slides quando a janela é redimensionada
-        window.addEventListener('resize', () => {
-            // Debounce para evitar chamadas excessivas durante o redimensionamento
-            clearTimeout(window.resizeTimer);
-            window.resizeTimer = setTimeout(() => {
-                updateSlideWidth();
-            }, 250);
-        });
-        
-        // Autoplay (ativado por padrão)
-        let autoplayInterval;
-        
-        function startAutoplay() {
-            console.log("Iniciando autoplay");
-            autoplayInterval = setInterval(() => {
-                if (currentIndex < maxIndex) {
-                    goToSlide(currentIndex + 1);
-                } else {
-                    goToSlide(0); // Volta para o início
-                }
-            }, 5000); // 5 segundos entre slides
-        }
-        
-        function stopAutoplay() {
-            console.log("Parando autoplay");
-            clearInterval(autoplayInterval);
-        }
-        
-        // Inicia autoplay
-        startAutoplay();
-        
-        // Pausa quando o usuário interage
-        const interactiveElements = [prevButton, nextButton, track];
-        if (dots && dots.length) {
-            dots.forEach(dot => interactiveElements.push(dot));
-        }
-        
-        interactiveElements.forEach(el => {
-            if (el) {
-                el.addEventListener('mouseenter', stopAutoplay);
-                el.addEventListener('mouseleave', startAutoplay);
-                el.addEventListener('touchstart', stopAutoplay, { passive: true });
-                el.addEventListener('touchend', () => {
-                    setTimeout(startAutoplay, 3000);
-                }, { passive: true });
+// === NAVEGAÇÃO SUAVE PARA DEPOIMENTOS ===
+function initSmoothScrollToTestimonials() {
+    document.querySelectorAll('a[href="#depoimentos"]').forEach(link => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.getElementById('depoimentos');
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
         });
-        
-        // Calcular dimensões e inicializar
-        calculateDimensions();
-        
-        // Adiar a inicialização para garantir que o DOM está totalmente renderizado
-        setTimeout(() => {
-            // Recalcular dimensões (para caso o DOM tenha sido atualizado)
-            calculateDimensions();
-            
-            // Inicialização - ir para o primeiro slide
-            goToSlide(0);
-            
-            // Adicionando efeito de entrada com escalonamento
-            slides.forEach((slide, index) => {
-                slide.style.opacity = '0';
-                slide.style.transform = 'translateY(20px)';
-                
-                setTimeout(() => {
-                    slide.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-                    slide.style.opacity = '1';
-                    slide.style.transform = 'translateY(0)';
-                }, 100 + (index * 150));
-            });
-        }, 500);
+    });
+}
+
+// === CARROSSEL DE DEPOIMENTOS ===
+function initTestimonialsCarousel() {
+    const track = document.querySelector('.testimonials-track');
+    const slides = document.querySelectorAll('.testimonial-slide');
+    const dots = document.querySelectorAll('.testimonial-dot');
+    const prevButton = document.querySelector('.testimonial-prev');
+    const nextButton = document.querySelector('.testimonial-next');
+
+    if (!track || slides.length === 0) return;
+
+    let currentIndex = 0;
+    let slideWidth;
+    let slidesToShow;
+    let maxIndex;
+
+    function calculateDimensions() {
+        const container = document.querySelector('.testimonials-container');
+        const containerWidth = container ? container.offsetWidth : 0;
+        slidesToShow = window.innerWidth >= 768 ? 3 : 1;
+        slideWidth = slides[0].offsetWidth || containerWidth / slidesToShow;
+        maxIndex = Math.max(0, slides.length - slidesToShow);
     }
-    
-    // Observe quando a seção de depoimentos entra no viewport para iniciar animações
-    const testimonialsObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('testimonials-visible');
-                testimonialsObserver.unobserve(entry.target);
+
+    function goToSlide(index) {
+        currentIndex = index;
+        const translateX = currentIndex * slideWidth;
+        track.style.transform = `translateX(-${translateX}px)`;
+
+        dots.forEach((dot, i) => {
+            dot.classList.toggle('bg-fatho-gold', i === currentIndex);
+            dot.classList.toggle('bg-transparent', i !== currentIndex);
+        });
+
+        slides.forEach((slide, i) => {
+            const card = slide.querySelector('.testimonial-card');
+            if (card) {
+                card.classList.toggle('border-2', i === currentIndex);
+                card.classList.toggle('border-fatho-gold', i === currentIndex);
             }
         });
-    }, { threshold: 0.1 });
-    
+
+        if (prevButton) prevButton.classList.toggle('opacity-50', currentIndex === 0);
+        if (nextButton) nextButton.classList.toggle('opacity-50', currentIndex === maxIndex);
+    }
+
+    function updateSlideWidth() {
+        calculateDimensions();
+        slides.forEach(slide => {
+            slide.style.minWidth = `${slideWidth}px`;
+        });
+        goToSlide(Math.min(currentIndex, maxIndex));
+    }
+
+    if (prevButton) {
+        prevButton.addEventListener('click', e => {
+            e.preventDefault();
+            if (currentIndex > 0) goToSlide(currentIndex - 1);
+        });
+    }
+
+    if (nextButton) {
+        nextButton.addEventListener('click', e => {
+            e.preventDefault();
+            if (currentIndex < maxIndex) goToSlide(currentIndex + 1);
+        });
+    }
+
+    dots.forEach((dot, i) => {
+        dot.addEventListener('click', e => {
+            e.preventDefault();
+            goToSlide(Math.min(i, maxIndex));
+        });
+    });
+
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    track.addEventListener('touchstart', e => {
+        touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+
+    track.addEventListener('touchend', e => {
+        touchEndX = e.changedTouches[0].screenX;
+        const threshold = 50;
+        if (touchStartX - touchEndX > threshold && currentIndex < maxIndex) {
+            goToSlide(currentIndex + 1);
+        } else if (touchEndX - touchStartX > threshold && currentIndex > 0) {
+            goToSlide(currentIndex - 1);
+        }
+    }, { passive: true });
+
+    window.addEventListener('resize', () => {
+        clearTimeout(window.resizeTimer);
+        window.resizeTimer = setTimeout(updateSlideWidth, 250);
+    });
+
+    let autoplayInterval;
+    function startAutoplay() {
+        autoplayInterval = setInterval(() => {
+            currentIndex < maxIndex ? goToSlide(currentIndex + 1) : goToSlide(0);
+        }, 5000);
+    }
+
+    function stopAutoplay() {
+        clearInterval(autoplayInterval);
+    }
+
+    const interactiveElements = [prevButton, nextButton, track, ...dots];
+    interactiveElements.forEach(el => {
+        if (el) {
+            el.addEventListener('mouseenter', stopAutoplay);
+            el.addEventListener('mouseleave', startAutoplay);
+            el.addEventListener('touchstart', stopAutoplay, { passive: true });
+            el.addEventListener('touchend', () => setTimeout(startAutoplay, 3000), { passive: true });
+        }
+    });
+
+    calculateDimensions();
+    setTimeout(() => {
+        calculateDimensions();
+        goToSlide(0);
+        slides.forEach((slide, i) => {
+            slide.style.opacity = '0';
+            slide.style.transform = 'translateY(20px)';
+            setTimeout(() => {
+                slide.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                slide.style.opacity = '1';
+                slide.style.transform = 'translateY(0)';
+            }, 100 + (i * 150));
+        });
+    }, 500);
+
     const testimonialsSection = document.getElementById('depoimentos');
     if (testimonialsSection) {
-        testimonialsObserver.observe(testimonialsSection);
+        const observer = new IntersectionObserver((entries, obs) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('testimonials-visible');
+                    obs.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        observer.observe(testimonialsSection);
     }
-});
+
+    startAutoplay();
+}
