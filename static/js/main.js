@@ -107,9 +107,16 @@ function initTestimonialsCarousel() {
         slides.forEach((slide, i) => {
             const card = slide.querySelector('.testimonial-card');
             if (card) {
+                card.classList.remove('active');
+                card.style.zIndex = '1';
+        
+                // Calcular o centro do carrossel com base na quantidade visível
                 const middleIndex = currentIndex + Math.floor(slidesToShow / 2);
-                card.classList.toggle('border-2', i === middleIndex);
-                card.classList.toggle('border-fatho-gold', i === middleIndex);
+        
+                if (i === middleIndex) {
+                    card.classList.add('active'); // Card central
+                    card.style.zIndex = '10';
+                }
             }
         });
 
