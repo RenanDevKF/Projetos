@@ -26,24 +26,31 @@ function initServiceCardsAnimation() {
     });
 }
 
-// === EFEITO DE CLIQUE COM ONDA ===
-function initRippleEffect() {
-    document.querySelectorAll('.service-card a').forEach(button => {
-        button.addEventListener('click', function (e) {
-            const rect = button.getBoundingClientRect();
-            const x = e.clientX - rect.left;
-            const y = e.clientY - rect.top;
+    // === EFEITO DE CLIQUE COM ONDA ===
+    function initRippleEffect() {
+        const rippleElements = [
+            '.service-card a', 
+            '.service-card-link',
+            '.btn-booking',
+            '.flex.justify-center.gap-4 a'
+        ].join(', ');
 
-            const ripple = document.createElement('span');
-            ripple.className = 'ripple-effect';
-            ripple.style.left = `${x}px`;
-            ripple.style.top = `${y}px`;
+        document.querySelectorAll(rippleElements).forEach(button => {
+            button.addEventListener('click', function(e) {
+                const rect = button.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
 
-            button.appendChild(ripple);
-            setTimeout(() => ripple.remove(), 600);
+                const ripple = document.createElement('span');
+                ripple.className = 'ripple-effect';
+                ripple.style.left = `${x}px`;
+                ripple.style.top = `${y}px`;
+
+                button.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 600);
+            });
         });
-    });
-}
+    }
 
 // === ANIMAÇÃO AO ROLAR ATÉ SEÇÃO DE SERVIÇOS ===
 function initScrollTrigger() {
