@@ -8,12 +8,12 @@ env = environ.Env(
     DEBUG=(bool, False)
 )
 
-# Caminho base do projeto
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Garantir que o arquivo .env seja lido corretamente
+
 env_file_path = BASE_DIR / '.env'
-print(f"Lendo o arquivo .env de {env_file_path}")  # Confirme que está lendo o arquivo correto
+
 environ.Env.read_env(env_file_path)
 
 # Configurações sensíveis via .env
@@ -21,10 +21,6 @@ SECRET_KEY = env("SECRET_KEY")
 DEBUG = env("DEBUG")
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
 
-# Opcional: Teste para garantir que as variáveis estão sendo carregadas corretamente
-print("SECRET_KEY:", SECRET_KEY)
-print("DEBUG:", DEBUG)
-print("ALLOWED_HOSTS:", ALLOWED_HOSTS)
 
 # Aplicativos instalados
 INSTALLED_APPS = [
