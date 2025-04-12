@@ -60,3 +60,17 @@ pnpm-lock.yaml
 dist/
 .build/
 .cache/
+
+# Ignore o ambiente virtual
+venv/
+env/
+
+# Ignore arquivos temporários
+*.pyc
+__pycache__/
+
+# Ignore o banco SQLite se estiver usando (não é o seu caso, mas bom incluir)
+*.sqlite3
+
+# Ignore variáveis de ambiente
+.env
