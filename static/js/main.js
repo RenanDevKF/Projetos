@@ -80,6 +80,7 @@ function initSmoothScrollLinks() {
 function initTestimonialsCarousel() {
     const track = document.querySelector('.testimonials-track');
     const slides = document.querySelectorAll('.testimonial-slide');
+    const realSlides = document.querySelectorAll('.testimonial-slide:not(.empty-slide)');
     const dots = document.querySelectorAll('.testimonial-dot');
     const prevButton = document.querySelector('.testimonial-prev');
     const nextButton = document.querySelector('.testimonial-next');
@@ -90,43 +91,68 @@ function initTestimonialsCarousel() {
     let slideWidth;
     let slidesToShow;
     let maxIndex;
+    let offsetIndex = 0; // Usado para compensar os slides vazios no desktop
+
+    // Determinar se temos slides vazios (desktop mode)
+    const hasEmptySlides = document.querySelectorAll('.empty-slide').length > 0;
+    
+    if (hasEmptySlides && window.innerWidth >= 768) {
+        offsetIndex = 1; // Se estamos em desktop com slides vazios, compensamos o índice
+    }
 
     function calculateDimensions() {
         const container = document.querySelector('.testimonials-container');
         const containerWidth = container ? container.offsetWidth : 0;
         slidesToShow = window.innerWidth >= 768 ? 3 : 1;
         slideWidth = slides[0].offsetWidth || containerWidth / slidesToShow;
-        maxIndex = Math.max(0, slides.length - slidesToShow);
         
-
+        // Ajustar maxIndex para os slides reais (sem os vazios)
+        maxIndex = realSlides.length - 1;
+        
+        // Verificar se estamos em desktop mode com slides vazios
+        if (window.innerWidth >= 768 && hasEmptySlides) {
+            document.querySelectorAll('.empty-slide').forEach(slide => {
+                slide.classList.remove('hidden');
+                slide.classList.add('block');
+            });
+            offsetIndex = 1;
+        } else {
+            document.querySelectorAll('.empty-slide').forEach(slide => {
+                slide.classList.add('hidden');
+                slide.classList.remove('block');
+            });
+            offsetIndex = 0;
+        }
     }
 
     function goToSlide(index) {
         currentIndex = index;
-        const translateX = currentIndex * slideWidth;
+        // Ajuste do translateX para considerar o slide vazio inicial
+        const translateX = (currentIndex + offsetIndex) * slideWidth;
         track.style.transform = `translateX(-${translateX}px)`;
 
+        // Atualizar dots
         dots.forEach((dot, i) => {
             dot.classList.toggle('bg-fatho-gold', i === currentIndex);
             dot.classList.toggle('bg-transparent', i !== currentIndex);
         });
 
+        // Atualizar os estados ativos nos slides
         slides.forEach((slide, i) => {
             const card = slide.querySelector('.testimonial-card');
-            if (card) {
-                card.classList.remove('active');
-                card.style.zIndex = '1';
-        
-                // Calcular o centro do carrossel com base na quantidade visível
-                const middleIndex = currentIndex + Math.floor(slidesToShow / 2);
-        
-                if (i === middleIndex) {
-                    card.classList.add('active'); // Card central
-                    card.style.zIndex = '10';
-                }
+            if (!card) return;
+            
+            card.classList.remove('active');
+            card.style.zIndex = '1';
+            
+            // O slide real ativo é o currentIndex + offsetIndex
+            if (i === currentIndex + offsetIndex) {
+                card.classList.add('active');
+                card.style.zIndex = '10';
             }
         });
 
+        // Atualizar estados dos botões
         if (prevButton) prevButton.classList.toggle('opacity-50', currentIndex === 0);
         if (nextButton) nextButton.classList.toggle('opacity-50', currentIndex === maxIndex);
     }
@@ -142,11 +168,10 @@ function initTestimonialsCarousel() {
     if (prevButton) {
         prevButton.addEventListener('click', e => {
             e.preventDefault();
-            // Se estiver no início, vai pro final
             if (currentIndex > 0) {
                 goToSlide(currentIndex - 1);
             } else {
-                goToSlide(maxIndex); // Vai pro último
+                goToSlide(maxIndex); // Circular
             }
         });
     }
@@ -154,11 +179,10 @@ function initTestimonialsCarousel() {
     if (nextButton) {
         nextButton.addEventListener('click', e => {
             e.preventDefault();
-            // Se estiver no final, volta para o começo
             if (currentIndex < maxIndex) {
                 goToSlide(currentIndex + 1);
             } else {
-                goToSlide(0); // Reinicia manualmente
+                goToSlide(0); // Circular
             }
         });
     }
@@ -170,6 +194,7 @@ function initTestimonialsCarousel() {
         });
     });
 
+    // Swipe handling
     let touchStartX = 0;
     let touchEndX = 0;
 
@@ -187,15 +212,21 @@ function initTestimonialsCarousel() {
         }
     }, { passive: true });
 
+    // Responsive handler
     window.addEventListener('resize', () => {
         clearTimeout(window.resizeTimer);
         window.resizeTimer = setTimeout(updateSlideWidth, 250);
     });
 
+    // Autoplay
     let autoplayInterval;
     function startAutoplay() {
         autoplayInterval = setInterval(() => {
-            currentIndex < maxIndex ? goToSlide(currentIndex + 1) : goToSlide(0);
+            if (currentIndex < maxIndex) {
+                goToSlide(currentIndex + 1);
+            } else {
+                goToSlide(0); // Retorna ao primeiro slide
+            }
         }, 5000);
     }
 
@@ -203,21 +234,22 @@ function initTestimonialsCarousel() {
         clearInterval(autoplayInterval);
     }
 
-    const interactiveElements = [prevButton, nextButton, track, ...dots];
+    const interactiveElements = [prevButton, nextButton, track, ...dots].filter(el => el);
     interactiveElements.forEach(el => {
-        if (el) {
-            el.addEventListener('mouseenter', stopAutoplay);
-            el.addEventListener('mouseleave', startAutoplay);
-            el.addEventListener('touchstart', stopAutoplay, { passive: true });
-            el.addEventListener('touchend', () => setTimeout(startAutoplay, 3000), { passive: true });
-        }
+        el.addEventListener('mouseenter', stopAutoplay);
+        el.addEventListener('mouseleave', startAutoplay);
+        el.addEventListener('touchstart', stopAutoplay, { passive: true });
+        el.addEventListener('touchend', () => setTimeout(startAutoplay, 3000), { passive: true });
     });
 
+    // Inicialização
     calculateDimensions();
     setTimeout(() => {
         calculateDimensions();
         goToSlide(0);
-        slides.forEach((slide, i) => {
+        
+        // Animação de entrada dos slides
+        realSlides.forEach((slide, i) => {
             slide.style.opacity = '0';
             slide.style.transform = 'translateY(20px)';
             setTimeout(() => {
@@ -228,6 +260,7 @@ function initTestimonialsCarousel() {
         });
     }, 500);
 
+    // Observer para animação quando entra no viewport
     const testimonialsSection = document.getElementById('depoimentos');
     if (testimonialsSection) {
         const observer = new IntersectionObserver((entries, obs) => {
