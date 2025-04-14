@@ -79,22 +79,22 @@ function initSmoothScrollLinks() {
 // === CARROSSEL DE DEPOIMENTOS ===
 function initTestimonialsCarousel() {
     const track = document.querySelector('.testimonials-track');
-    const slides = document.querySelectorAll('.testimonial-slide');
+    const slides = document.querySelectorAll('.testimonial-slide:not(.empty-slide)');
     const dots = document.querySelectorAll('.testimonial-dot');
     const prevButton = document.querySelector('.testimonial-prev');
     const nextButton = document.querySelector('.testimonial-next');
 
     if (!track || slides.length === 0) return;
 
-    // Clone os slides para criar o efeito infinito
-    const firstSlide = slides[0].cloneNode(true);
-    const lastSlide = slides[slides.length - 1].cloneNode(true);
-    track.insertBefore(lastSlide, slides[0]);
-    track.appendChild(firstSlide);
+    // Clone os primeiros e últimos slides para criar o efeito infinito
+    const clonesStart = Array.from(slides).slice(0, 3).map(slide => slide.cloneNode(true));
+    const clonesEnd = Array.from(slides).slice(-3).map(slide => slide.cloneNode(true));
+    
+    clonesEnd.forEach(clone => track.insertBefore(clone, slides[0]));
+    clonesStart.forEach(clone => track.appendChild(clone));
 
-    // Atualiza a lista de slides após clonagem
     const allSlides = document.querySelectorAll('.testimonial-slide');
-    let currentIndex = 1; // Começa no primeiro slide original (o clone está antes)
+    let currentIndex = clonesEnd.length; // Começa após os clones iniciais
     let slideWidth;
     let slidesToShow;
     let isAnimating = false;
@@ -105,12 +105,10 @@ function initTestimonialsCarousel() {
         slidesToShow = window.innerWidth >= 768 ? 3 : 1;
         slideWidth = containerWidth / slidesToShow;
         
-        // Define a largura mínima para cada slide
         allSlides.forEach(slide => {
             slide.style.minWidth = `${slideWidth}px`;
         });
         
-        // Posiciona o carrossel no slide original (ignorando o clone)
         track.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
     }
 
@@ -121,25 +119,31 @@ function initTestimonialsCarousel() {
         currentIndex = index;
         const translateX = currentIndex * slideWidth;
         
-        if (animate) {
-            track.style.transition = 'transform 0.5s cubic-bezier(0.215, 0.610, 0.355, 1.000)';
-        } else {
-            track.style.transition = 'none';
-        }
-        
+        track.style.transition = animate ? 'transform 0.5s ease' : 'none';
         track.style.transform = `translateX(-${translateX}px)`;
         
-        // Atualiza os dots
         updateDots();
-        
-        // Atualiza o estado ativo dos slides
         updateActiveSlides();
     }
 
+    function handleTransitionEnd() {
+        isAnimating = false;
+        
+        // Se chegou nos clones do início (voltando)
+        if (currentIndex <= 0) {
+            currentIndex = slides.length; // Vai para o final dos slides reais
+            goToSlide(currentIndex, false);
+        } 
+        // Se chegou nos clones do final (avançando)
+        else if (currentIndex >= allSlides.length - slidesToShow) {
+            currentIndex = clonesEnd.length; // Volta para o início dos slides reais
+            goToSlide(currentIndex, false);
+        }
+    }
+
     function updateDots() {
-        let dotIndex = currentIndex - 1;
-        if (dotIndex < 0) dotIndex = slides.length - 1;
-        if (dotIndex >= slides.length) dotIndex = 0;
+        const realIndex = (currentIndex - clonesEnd.length) % slides.length;
+        const dotIndex = realIndex < 0 ? slides.length + realIndex : realIndex;
         
         dots.forEach((dot, i) => {
             dot.classList.toggle('bg-fatho-gold', i === dotIndex);
@@ -148,40 +152,19 @@ function initTestimonialsCarousel() {
     }
 
     function updateActiveSlides() {
-        // Remove a classe 'active' de todos os slides
-        allSlides.forEach(slide => {
+        allSlides.forEach((slide, i) => {
             const card = slide.querySelector('.testimonial-card');
             if (card) {
                 card.classList.remove('active');
                 card.style.zIndex = '1';
+                
+                // Ativa o slide central
+                if (i === currentIndex + Math.floor(slidesToShow / 2)) {
+                    card.classList.add('active');
+                    card.style.zIndex = '10';
+                }
             }
         });
-        
-        // Adiciona a classe 'active' para o slide central
-        const centerIndex = currentIndex + Math.floor(slidesToShow / 2);
-        const activeSlide = allSlides[centerIndex];
-        if (activeSlide) {
-            const card = activeSlide.querySelector('.testimonial-card');
-            if (card) {
-                card.classList.add('active');
-                card.style.zIndex = '10';
-            }
-        }
-    }
-
-    function handleTransitionEnd() {
-        isAnimating = false;
-        
-        // Verifica se chegou no clone do início
-        if (currentIndex === 0) {
-            currentIndex = slides.length;
-            goToSlide(currentIndex, false);
-        }
-        // Verifica se chegou no clone do final
-        else if (currentIndex === allSlides.length - 1) {
-            currentIndex = slides.length;
-            goToSlide(currentIndex, false);
-        }
     }
 
     function nextSlide() {
@@ -195,43 +178,34 @@ function initTestimonialsCarousel() {
     // Event listeners
     track.addEventListener('transitionend', handleTransitionEnd);
     
-    if (prevButton) {
-        prevButton.addEventListener('click', e => {
-            e.preventDefault();
-            prevSlide();
-        });
-    }
+    if (prevButton) prevButton.addEventListener('click', e => {
+        e.preventDefault();
+        prevSlide();
+    });
 
-    if (nextButton) {
-        nextButton.addEventListener('click', e => {
-            e.preventDefault();
-            nextSlide();
-        });
-    }
+    if (nextButton) nextButton.addEventListener('click', e => {
+        e.preventDefault();
+        nextSlide();
+    });
 
     dots.forEach((dot, i) => {
         dot.addEventListener('click', e => {
             e.preventDefault();
-            goToSlide(i + 1); // +1 por causa do clone no início
+            goToSlide(i + clonesEnd.length);
         });
     });
 
     // Swipe handling
     let touchStartX = 0;
-    let touchEndX = 0;
-
     track.addEventListener('touchstart', e => {
         touchStartX = e.changedTouches[0].screenX;
     }, { passive: true });
 
     track.addEventListener('touchend', e => {
-        touchEndX = e.changedTouches[0].screenX;
+        const touchEndX = e.changedTouches[0].screenX;
         const threshold = 50;
-        if (touchStartX - touchEndX > threshold) {
-            nextSlide();
-        } else if (touchEndX - touchStartX > threshold) {
-            prevSlide();
-        }
+        if (touchStartX - touchEndX > threshold) nextSlide();
+        else if (touchEndX - touchStartX > threshold) prevSlide();
     }, { passive: true });
 
     // Responsive handler
@@ -247,15 +221,12 @@ function initTestimonialsCarousel() {
     calculateDimensions();
     setTimeout(() => {
         goToSlide(currentIndex, false);
-        updateActiveSlides();
     }, 100);
 
     // Autoplay
     let autoplayInterval;
     function startAutoplay() {
-        autoplayInterval = setInterval(() => {
-            nextSlide();
-        }, 5000);
+        autoplayInterval = setInterval(nextSlide, 5000);
     }
 
     function stopAutoplay() {
