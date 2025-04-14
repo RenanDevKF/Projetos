@@ -392,16 +392,13 @@ input, textarea, select {
     position: relative;
     width: 100%;
     margin: 0 auto;
-    overflow-x: hidden; /* Impede que vazem para os lados */
-    overflow-y: visible; /* Permite crescimento para cima no hover */
-    padding-left: 1rem;
-    padding-right: 1rem;
+    overflow: hidden;
   }
 
   .testimonials-container {
     width: 100%;
     overflow: visible;
-    position:relative;
+    position: relative;
   }
 
   .testimonials-track {
@@ -413,6 +410,7 @@ input, textarea, select {
   .testimonial-slide {
     flex-shrink: 0;
     padding: 0 1rem;
+    transition: all 0.3s ease;
   }
 
   @media (min-width: 768px) {
