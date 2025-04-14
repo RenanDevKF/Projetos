@@ -10,47 +10,7 @@
     <link rel="stylesheet" href="{% static 'css/custom.css' %}">
 </head>
 <body class="bg-background text-foreground min-h-screen flex flex-col">
-    <!-- Header/Navegação -->
-    <header class="w-full bg-white shadow-sm">
-        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <div class="flex items-center">
-                <a href="{% url 'core:home' %}" class="flex items-center">
-                    <div class="bg-white rounded-full w-12 h-12 flex items-center justify-center">
-                        <span class="text-fatho-dark font-bold">F</span>
-                    </div>
-                    <span class="ml-2 text-lg font-semibold">Fatho Massoterapia</span>
-                </a>
-            </div>
-            
-            <nav class="hidden md:flex space-x-6">
-                <a href="{% url 'core:home' %}" class="text-fatho-dark hover:text-primary transition">Início</a>
-                <a href="{% url 'core:about' %}" class="text-fatho-dark hover:text-primary transition">Sobre</a>
-                <a href="{% url 'core:services' %}" class="text-fatho-dark hover:text-primary transition">Serviços</a>
-                <a href="{% url 'core:contact' %}" class="text-fatho-dark hover:text-primary transition">Contato</a>
-                <a href="{% url 'core:booking' %}" class="bg-fatho-gold hover:bg-fatho-gold/80 text-fatho-dark px-4 py-2 rounded transition">Agendar</a>
-            </nav>
-            
-            <div class="md:hidden">
-                <button id="mobile-menu-button" class="text-fatho-dark">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-                    </svg>
-                </button>
-            </div>
-        </div>
-        
-        <!-- Menu móvel -->
-        <div id="mobile-menu" class="md:hidden hidden bg-white w-full">
-            <div class="container mx-auto px-4 py-4 flex flex-col space-y-4">
-                <a href="{% url 'core:home' %}" class="text-fatho-dark hover:text-primary transition">Início</a>
-                <a href="{% url 'core:about' %}" class="text-fatho-dark hover:text-primary transition">Sobre</a>
-                <a href="{% url 'core:services' %}" class="text-fatho-dark hover:text-primary transition">Serviços</a>
-                <a href="{% url 'core:contact' %}" class="text-fatho-dark hover:text-primary transition">Contato</a>
-                <a href="{% url 'core:booking' %}" class="bg-fatho-gold hover:bg-fatho-gold/80 text-fatho-dark px-4 py-2 rounded inline-block transition">Agendar</a>
-            </div>
-        </div>
-    </header>
-
+    
     <!-- Conteúdo principal -->
     <main class="flex-grow">
         {% block content %}{% endblock %}
