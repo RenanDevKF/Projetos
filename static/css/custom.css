@@ -11,19 +11,24 @@
 /* === HERO SECTION === */
 .hero-section,
 .bg-hero {
-  position: relative !important;
-  background-size: cover !important;
-  background-position: center !important;
-  height: 50vh !important;
-  min-height: 450px !important;
-  max-height: 550px !important;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  height: 50vh;
+  min-height: 300px;
+  max-height: 60vh;
+  display: flex;
+  align-items: center;
 }
 
 .hero-section::before,
 .bg-hero::after {
   content: '';
   position: absolute;
-  top: 0; left: 0; right: 0; bottom: 0;
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0;
   background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6));
   z-index: 1;
 }
@@ -32,12 +37,6 @@
 .bg-hero > * {
   position: relative;
   z-index: 2;
-}
-
-.hero-height {
-  height: 100vh !important;
-  min-height: 450px !important;
-  max-height: 550px !important;
 }
 
 /* === TRANSIÇÕES === */
@@ -51,6 +50,13 @@ a, button {
 }
 #mobile-menu-button:hover {
   transform: scale(1.1);
+}
+
+@media (max-width: 480px) {
+  .hero-section,
+  .bg-hero {
+    min-height: 250px;
+  }
 }
 
 /* === SCROLLBAR CUSTOMIZADA === */
