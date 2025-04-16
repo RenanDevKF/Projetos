@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Nossos Serviços - Bem-Estar{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/services.css' %}">
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section com imagem de fundo - Tamanho ajustado -->
+<section class="relative bg-cover bg-center" style="background-image: url('{% static 'img/massage-hero.jpg' %}'); background-position: center top 40%; height: 60vh; min-height: 400px; max-height: 70vh; display: flex; align-items: center;">
+    <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+    
+    <div class="container mx-auto px-4 relative z-10">
+        <div class="text-center text-white">
+            <h1 class="text-4xl md:text-5xl font-bold mb-2">Fatho Massoterapia</h1>
+            <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto">Espaço de Acolhimento e Terapias Holísticas</p>
+            <div class="flex flex-wrap gap-4 justify-center">
+                <a href="#contato" class="btn-hero">Agendar Consulta</a>
+                <a href="{% url 'services:service_list' %}" class="btn-hero">Nossos Serviços</a>
+            </div>
+            
+            <!-- Logomarca adicionada aqui -->
+            <div class="animate-fade-in">
+                <img src="{% static 'img/logo-fatho.png' %}" 
+                     alt="Logo Fatho Massoterapia" 
+                     class="mx-auto h-48 md:h-60 w-auto opacity-90 hover:opacity-100 transition-opacity">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="py-12 bg-gray-100">
+    <div class="container mx-auto px-4">
+        {% for service in services %}
+            <div class="service-card mb-24 reveal-element {% if forloop.counter|divisibleby:2 %}service-right{% else %}service-left{% endif %}">
+                <div class="flex flex-col md:flex-row {% if forloop.counter|divisibleby:2 %}md:flex-row-reverse{% endif %} items-center gap-8">
+                    <!-- Image Column -->
+                    <div class="w-full md:w-1/2 mb-6 md:mb-0 parallax-element" data-speed="0.05">
+                        <div class="rounded-lg overflow-hidden shadow-xl">
+                            {% if service.image %}
+                                <img src="{{ service.image.url }}" alt="{{ service.name }}" class="w-full h-auto">
+                            {% else %}
+                                <img src="{% static 'img/placeholder.jpg' %}" alt="{{ service.name }}" class="w-full h-auto">
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <!-- Content Column -->
+                    <div class="w-full md:w-1/2 parallax-element" data-speed="0.1">
+                        <h2 class="text-3xl font-bold mb-4">{{ service.name }}</h2>
+                        <div class="prose max-w-none mb-6">
+                            <p class="text-lg mb-4">{{ service.short_description }}</p>
+                            <p>{{ service.description|linebreaks }}</p>
+                        </div>
+                        <div class="flex flex-wrap gap-4 mb-6">
+                            <div class="bg-gray-200 px-4 py-2 rounded-md">
+                                <span class="font-bold">Duração:</span> {{ service.duration }} minutos
+                            </div>
+                            <div class="bg-gray-200 px-4 py-2 rounded-md">
+                                <span class="font-bold">Preço:</span> R$ {{ service.price }}
+                            </div>
+                        </div>
+                        <a href="https://wa.link/y60urm"
+                           target="_blank"
+                           rel="noopener noreferrer"
+                           class="inline-block bg-amber-500 hover:bg-amber-600 text-white font-medium py-2 px-6 rounded-md transition duration-300">
+                            Agendar Serviço
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Call to Action Section -->
+<section class="py-16 bg-green-100 reveal-element">
+    <div class="container mx-auto px-4 text-center">
+        <h2 class="text-3xl font-bold mb-4">Pronto para começar sua jornada de bem-estar?</h2>
+        <p class="mb-8">Estamos prontos e ansiosos te encontrar e para ajudar você a alcançar o equilíbrio que procura.</p>
+        <a href="https://wa.link/y60urm"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-block bg-amber-500 hover:bg-amber-600 text-white font-medium py-2 px-6 rounded-md transition duration-300">
+            Agende sua Consulta
+        </a>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/services.js' %}"></script>
+{% endblock %}
