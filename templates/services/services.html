@@ -4,11 +4,11 @@
 {% block title %}Nossos Serviços - Bem-Estar{% endblock %}
 
 {% block extra_css %}
-<link rel="stylesheet" href="{% static 'css/services.css' %}">
+<link rel="stylesheet" href="{% static 'css/services-page.css' %}"> <!-- Mudei o nome para evitar conflitos -->
 {% endblock %}
 
 {% block content %}
-<!-- Hero Section com imagem de fundo - Tamanho ajustado -->
+<!-- Hero Section com imagem de fundo -->
 <section class="relative bg-cover bg-center" style="background-image: url('{% static 'img/massage-hero.jpg' %}'); background-position: center top 40%; height: 60vh; min-height: 400px; max-height: 70vh; display: flex; align-items: center;">
     <div class="absolute inset-0 bg-black bg-opacity-40"></div>
     
@@ -31,43 +31,55 @@
     </div>
 </section>
 
-<!-- Services Section -->
-<section class="py-12 bg-gray-100">
-    <div class="container mx-auto px-4">
+<!-- Services Section com estilo clean -->
+<section class="py-16 bg-gradient-to-b from-gray-50 to-white">
+    <div class="container mx-auto px-4 max-w-6xl">
         {% for service in services %}
-            <div class="service-card mb-24 reveal-element {% if forloop.counter|divisibleby:2 %}service-right{% else %}service-left{% endif %}">
-                <div class="flex flex-col md:flex-row {% if forloop.counter|divisibleby:2 %}md:flex-row-reverse{% endif %} items-center gap-8">
+            <div class="srv-card mb-28 {% if forloop.counter|divisibleby:2 %}srv-card-right{% else %}srv-card-left{% endif %}">
+                <div class="flex flex-col md:flex-row {% if forloop.counter|divisibleby:2 %}md:flex-row-reverse{% endif %} items-center gap-12">
                     <!-- Image Column -->
-                    <div class="w-full md:w-1/2 mb-6 md:mb-0 parallax-element" data-speed="0.05">
-                        <div class="rounded-lg overflow-hidden shadow-xl">
+                    <div class="w-full md:w-1/2 mb-6 md:mb-0 srv-parallax" data-speed="0.05">
+                        <div class="rounded-2xl overflow-hidden shadow-xl">
                             {% if service.image %}
-                                <img src="{{ service.image.url }}" alt="{{ service.name }}" class="w-full h-auto">
+                                <img src="{{ service.image.url }}" alt="{{ service.name }}" class="srv-image">
                             {% else %}
-                                <img src="{% static 'img/placeholder.jpg' %}" alt="{{ service.name }}" class="w-full h-auto">
+                                <img src="{% static 'img/placeholder.jpg' %}" alt="{{ service.name }}" class="srv-image">
                             {% endif %}
                         </div>
                     </div>
                     
-                    <!-- Content Column -->
-                    <div class="w-full md:w-1/2 parallax-element" data-speed="0.1">
-                        <h2 class="text-3xl font-bold mb-4">{{ service.name }}</h2>
+                    <!-- Content Column com estilo clean -->
+                    <div class="w-full md:w-1/2 srv-parallax" data-speed="0.1">
+                        <h2 class="text-3xl font-bold mb-4 text-gray-800">{{ service.name }}</h2>
                         <div class="prose max-w-none mb-6">
-                            <p class="text-lg mb-4">{{ service.short_description }}</p>
-                            <p>{{ service.description|linebreaks }}</p>
+                            <p class="text-lg mb-4 text-gray-700">{{ service.short_description }}</p>
+                            <p class="text-gray-600">{{ service.description|linebreaks }}</p>
                         </div>
+                        
+                        <!-- Tagline em destaque no estilo do exemplo -->
+                        <p class="text-amber-600 italic font-medium text-lg mb-6">
+                            {% if service.name == "Massagem Relaxante com Pedras Quentes" %}
+                                Destaque-se do estresse e entregue-se ao calor que cura.
+                            {% elif service.name == "Massagem Relaxante Sueca" %}
+                                Restaure seu corpo e mente com o toque sutil da massagem sueca.
+                            {% else %}
+                                Equilibre corpo e mente com o toque terapêutico.
+                            {% endif %}
+                        </p>
+                        
                         <div class="flex flex-wrap gap-4 mb-6">
-                            <div class="bg-gray-200 px-4 py-2 rounded-md">
+                            <div class="bg-gray-100 px-4 py-2 rounded-md text-gray-700">
                                 <span class="font-bold">Duração:</span> {{ service.duration }} minutos
                             </div>
-                            <div class="bg-gray-200 px-4 py-2 rounded-md">
+                            <div class="bg-gray-100 px-4 py-2 rounded-md text-gray-700">
                                 <span class="font-bold">Preço:</span> R$ {{ service.price }}
                             </div>
                         </div>
                         <a href="https://wa.link/y60urm"
                            target="_blank"
                            rel="noopener noreferrer"
-                           class="inline-block bg-amber-500 hover:bg-amber-600 text-white font-medium py-2 px-6 rounded-md transition duration-300">
-                            Agendar Serviço
+                           class="inline-block bg-amber-500 hover:bg-amber-600 text-white font-medium py-3 px-6 rounded-lg transition duration-300 shadow-md hover:shadow-xl">
+                            Agendar Sessão
                         </a>
                     </div>
                 </div>
@@ -77,14 +89,14 @@
 </section>
 
 <!-- Call to Action Section -->
-<section class="py-16 bg-green-100 reveal-element">
-    <div class="container mx-auto px-4 text-center">
-        <h2 class="text-3xl font-bold mb-4">Pronto para começar sua jornada de bem-estar?</h2>
-        <p class="mb-8">Estamos prontos e ansiosos te encontrar e para ajudar você a alcançar o equilíbrio que procura.</p>
+<section class="py-16 bg-green-50 srv-reveal">
+    <div class="container mx-auto px-4 text-center max-w-4xl">
+        <h2 class="text-3xl font-bold mb-4 text-gray-800">Pronto para começar sua jornada de bem-estar?</h2>
+        <p class="mb-8 text-gray-600">Estamos prontos e ansiosos para te encontrar e ajudar você a alcançar o equilíbrio que procura.</p>
         <a href="https://wa.link/y60urm"
             target="_blank"
             rel="noopener noreferrer"
-            class="inline-block bg-amber-500 hover:bg-amber-600 text-white font-medium py-2 px-6 rounded-md transition duration-300">
+            class="inline-block bg-amber-500 hover:bg-amber-600 text-white font-medium py-3 px-8 rounded-lg transition duration-300 shadow-md hover:shadow-xl">
             Agende sua Consulta
         </a>
     </div>
@@ -92,5 +104,5 @@
 {% endblock %}
 
 {% block extra_js %}
-<script src="{% static 'js/services.js' %}"></script>
+<script src="{% static 'js/services-page.js' %}"></script> <!-- Mudei o nome para evitar conflitos -->
 {% endblock %}
