@@ -1,0 +1,30 @@
+/* Estilos específicos para a página de serviços */
+.service-card {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.service-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.service-left {
+    transform: translateX(-30px);
+}
+
+.service-right {
+    transform: translateX(30px);
+}
+
+.reveal-element {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.reveal-element.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
