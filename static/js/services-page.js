@@ -8,6 +8,9 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Inicializar o efeito parallax
   initParallax();
+  
+  // Inicializar o carregamento otimizado de imagens
+  initImageLoading();
 });
 
 // Função para habilitar o scroll suave para toda a página
@@ -41,8 +44,8 @@ function initScrollReveal() {
           }
       });
   }, {
-      threshold: 0.15, // Elemento é considerado visível quando 15% dele está visível
-      rootMargin: '0px 0px -100px 0px' // Dispara um pouco antes do elemento entrar na viewport
+      threshold: 0.15,
+      rootMargin: '0px 0px -100px 0px'
   });
   
   // Adiciona todos os elementos ao observador
@@ -75,3 +78,61 @@ function initParallax() {
   });
 }
 
+// NOVA FUNÇÃO: Carregamento otimizado de imagens
+function initImageLoading() {
+  const lazyImages = document.querySelectorAll('.srv-image[data-src]');
+  
+  if (!lazyImages.length) return;
+
+  const imageObserver = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const img = entry.target;
+        const container = img.closest('.srv-image-container');
+        const placeholderUrl = container.dataset.placeholder;
+        
+        img.src = img.dataset.src;
+        img.removeAttribute('data-src');
+        
+        img.onload = () => {
+          img.classList.add('loaded');
+          observer.unobserve(img);
+        };
+        
+        img.onerror = () => {
+          img.src = placeholderUrl;
+          img.classList.add('loaded');
+          observer.unobserve(img);
+        };
+      }
+    });
+  }, {
+    rootMargin: '200px 0px',
+    threshold: 0.01
+  });
+
+  lazyImages.forEach(img => {
+    const container = img.closest('.srv-image-container');
+    const placeholderUrl = container.dataset.placeholder;
+    
+    img.onerror = () => {
+      img.src = placeholderUrl;
+      img.classList.add('loaded');
+    };
+    
+    imageObserver.observe(img);
+  });
+}
+
+// Função global para tratamento de erro
+function handleImageError(img) {
+  const container = img.closest('.srv-image-container');
+  if (container && container.dataset.placeholder) {
+      img.src = container.dataset.placeholder;
+  } else {
+      // Fallback extremo caso o data-placeholder não exista
+      img.src = '/static/img/placeholder.png';
+  }
+  img.classList.add('loaded');
+  return true; // Previne loops de erro
+}
