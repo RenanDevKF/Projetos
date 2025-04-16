@@ -1,20 +1,20 @@
 /* Estilos específicos para a página de serviços */
-.service-card {
+.srv-card {
     opacity: 0;
     transform: translateY(30px);
     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
-.service-card.visible {
+.srv-card.visible {
     opacity: 1;
     transform: translateY(0);
 }
 
-.service-left {
+.srv-card-left {
     transform: translateX(-30px);
 }
 
-.service-right {
+.srv-card-right {
     transform: translateX(30px);
 }
 
