@@ -14,7 +14,7 @@
                 <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto">Espaço de Acolhimento e Terapias Holísticas</p>
                 <div class="flex flex-wrap gap-4 justify-center">
                     <a href="#contato" class="btn-hero">Agendar Consulta</a>
-                    <a href="{% url 'core:services' %}" class="btn-hero">Nossos Serviços</a>
+                    <a href="{% url 'services:service_list' %}" class="btn-hero">Nossos Serviços</a>
                 </div>
                 
                 <!-- Logomarca adicionada aqui -->
@@ -122,7 +122,7 @@
                             {% endif %}
                             
                             <div class="flex space-x-3">
-                                <a href="{% url 'core:services' %}" 
+                                <a href="{% url 'services:service_list' %}" 
                                 class="bg-white hover:bg-gray-50 text-fatho-dark border border-fatho-gold flex-1 py-2 rounded-md inline-flex items-center justify-center transition-all font-medium">
                                     Consultar
                                 </a>
@@ -142,7 +142,7 @@
             </div>
         
             <div class="text-center mt-12">
-                <a href="{% url 'core:services' %}" 
+                <a href="{% url 'services:service_list' %}" 
                 class="hover-float ripple-btn inline-flex items-center px-8 py-3 bg-fatho-gold text-fatho-dark font-medium rounded-md hover:bg-fatho-gold/90 transition-all">
                     Ver todos os serviços
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
