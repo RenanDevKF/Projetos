@@ -38,15 +38,28 @@
             <div class="srv-card mb-28 {% if forloop.counter|divisibleby:2 %}srv-card-right{% else %}srv-card-left{% endif %}">
                 <div class="flex flex-col md:flex-row {% if forloop.counter|divisibleby:2 %}md:flex-row-reverse{% endif %} items-center gap-12">
                     <!-- Image Column -->
-                    <div class="w-full md:w-1/2 mb-6 md:mb-0 srv-parallax" data-speed="0.05">
-                        <div class="rounded-2xl overflow-hidden shadow-xl">
-                            {% if service.image %}
-                                <img src="{{ service.image.url }}" alt="{{ service.name }}" class="srv-image">
-                            {% else %}
-                                <img src="{% static 'img/placeholder.jpg' %}" alt="{{ service.name }}" class="srv-image">
-                            {% endif %}
+                        <div class="w-full md:w-1/2 mb-6 md:mb-0 srv-parallax" data-speed="0.05">
+                            <div class="rounded-2xl overflow-hidden shadow-xl srv-image-container"
+                                data-placeholder="{% static 'img/placeholder.png' %}">  <!-- Adicione esta linha -->
+                                
+                                {% if service.image %}
+                                    <img data-src="{{ service.image.url }}" 
+                                        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3C/svg%3E"
+                                        class="srv-image"
+                                        width="800"
+                                        height="600"
+                                        alt="{{ service.name }}"
+                                        onerror="handleImageError(this)">  <!-- Simplificado -->
+                                {% else %}
+                                    <img src="{% static 'img/placeholder.png' %}" 
+                                        alt="{{ service.name }}" 
+                                        class="srv-image loaded"
+                                        width="800"
+                                        height="600"
+                                        loading="eager">
+                                {% endif %}
+                            </div>
                         </div>
-                    </div>
                     
                     <!-- Content Column com estilo clean -->
                     <div class="w-full md:w-1/2 srv-parallax" data-speed="0.1">
