@@ -19,9 +19,11 @@
                 
                 <!-- Logomarca adicionada aqui -->
                 <div class="animate-fade-in">
-                    <img src="{% static 'img/logo-fatho.png' %}" 
-                         alt="Logo Fatho Massoterapia" 
-                         class="mx-auto h-48 md:h-60 w-auto opacity-90 hover:opacity-100 transition-opacity">
+                    <a href="{% url 'core:home' %}" class="inline-block transition-all duration-300 hover:scale-105">
+                        <img src="{% static 'img/logo-fatho.png' %}" 
+                            alt="Logo Fatho Massoterapia" 
+                            class="mx-auto h-48 md:h-60 w-auto opacity-90 hover:opacity-100 transition-opacity">
+                    </a>
                 </div>
             </div>
         </div>

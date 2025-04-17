@@ -17,13 +17,18 @@
             <h1 class="text-4xl md:text-5xl font-bold mb-2">Fatho Massoterapia</h1>
             <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto">Espaço de Acolhimento e Terapias Holísticas</p>
             <div class="flex flex-wrap gap-4 justify-center">
-                <a href="#contato" class="btn-hero">Agendar Consulta</a>
+                <a href="https://wa.link/y60urm"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn-hero">
+                    Agende sua Consulta
+                </a>
                 <a href="{% url 'services:service_list' %}" class="btn-hero">Nossos Serviços</a>
             </div>
             
             <!-- Logomarca adicionada aqui -->
             <div class="animate-fade-in">
-                <a href="{% url 'core:home' %}">
+                <a href="{% url 'core:home' %}" class="inline-block transition-all duration-300 hover:scale-105">
                     <img src="{% static 'img/logo-fatho.png' %}" 
                         alt="Logo Fatho Massoterapia" 
                         class="mx-auto h-48 md:h-60 w-auto opacity-90 hover:opacity-100 transition-opacity">
@@ -69,7 +74,6 @@
                         <div class="flex-grow"> <!-- Conteúdo superior -->
                             <h2 class="text-3xl font-bold mb-4 text-gray-800">{{ service.name }}</h2>
                             <div class="prose max-w-none mb-6">
-                                <p class="text-lg mb-4 text-gray-700">{{ service.short_description }}</p>
                                 <p class="text-gray-600">{{ service.description|linebreaks }}</p>
                             </div>
                             
