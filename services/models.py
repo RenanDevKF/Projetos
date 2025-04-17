@@ -19,6 +19,8 @@ class Service(models.Model):
     description = models.TextField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
     duration = models.IntegerField(help_text="Duração em minutos")
+    tagline = models.CharField(max_length=200, blank=True, 
+                             help_text="Frase de efeito para o serviço")
     image = models.ImageField(
         upload_to='services/',
         validators=[validate_image_size],
