@@ -1,10 +1,10 @@
 from django.db import models
-from ckeditor.fields import RichTextField
+from django_ckeditor_5.fields import CKEditor5Field
 
 class Sobre(models.Model):
     titulo = models.CharField('Título', max_length=100, default='Sobre a Fatho')
     foto = models.ImageField('Foto de perfil', upload_to='sobre/')
-    descricao = RichTextField('Descrição completa')  # Campo único para o texto
+    descricao = CKEditor5Field('Descrição completa')  # Campo único para o texto
     ativo = models.BooleanField('Ativo', default=True)
     
     class Meta:
