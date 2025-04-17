@@ -3,8 +3,8 @@ from django.shortcuts import render, get_object_or_404
 from .models import Service
 
 def service_list(request):
-    services = Service.objects.all()
-    return render(request, 'services/list.html', {'services': services})
+    services = Service.objects.all().order_by('id')
+    return render(request, 'services/services.html', {'services': services})
 
 def service_detail(request, slug):
     service = get_object_or_404(Service, slug=slug)
