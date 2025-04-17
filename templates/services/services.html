@@ -76,16 +76,12 @@
                             <div class="prose max-w-none mb-6">
                                 <p class="text-gray-600">{{ service.description|linebreaks }}</p>
                             </div>
-                            
+
+                            {% if service.tagline %}
                             <p class="text-amber-600 italic font-medium text-lg mb-6">
-                                {% if service.name == "Massagem Relaxante com Pedras Quentes" %}
-                                    Destaque-se do estresse e entregue-se ao calor que cura.
-                                {% elif service.name == "Massagem Relaxante Sueca" %}
-                                    Restaure seu corpo e mente com o toque sutil da massagem sueca.
-                                {% else %}
-                                    Equilibre corpo e mente com o toque terapêutico.
-                                {% endif %}
+                                {{ service.tagline }}
                             </p>
+                            {% endif %}
                         </div>
                         
                         <div> <!-- Conteúdo inferior -->
