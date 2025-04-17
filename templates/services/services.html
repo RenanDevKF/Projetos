@@ -38,64 +38,68 @@
     <div class="container mx-auto px-4 max-w-6xl">
         {% for service in services %}
             <div class="srv-card mb-28 {% if forloop.counter|divisibleby:2 %}srv-card-right{% else %}srv-card-left{% endif %}">
-                <div class="flex flex-col md:flex-row {% if forloop.counter|divisibleby:2 %}md:flex-row-reverse{% endif %} items-center gap-12">
+                <div class="flex flex-col md:flex-row {% if forloop.counter|divisibleby:2 %}md:flex-row-reverse{% endif %} items-start gap-12"> <!-- Mudei items-center para items-start -->
+                    
                     <!-- Image Column -->
-                        <div class="w-full md:w-1/2 mb-6 md:mb-0 srv-parallax" data-speed="0.05">
-                            <div class="rounded-2xl overflow-hidden shadow-xl srv-image-container"
-                                data-placeholder="{% static 'img/placeholder.png' %}">  <!-- Adicione esta linha -->
-                                
-                                {% if service.image %}
-                                    <img data-src="{{ service.image.url }}" 
-                                        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3C/svg%3E"
-                                        class="srv-image"
-                                        width="800"
-                                        height="600"
-                                        alt="{{ service.name }}"
-                                        onerror="handleImageError(this)">  <!-- Simplificado -->
-                                {% else %}
-                                    <img src="{% static 'img/placeholder.png' %}" 
-                                        alt="{{ service.name }}" 
-                                        class="srv-image loaded"
-                                        width="800"
-                                        height="600"
-                                        loading="eager">
-                                {% endif %}
-                            </div>
+                    <div class="w-full md:w-1/2 mb-6 md:mb-0">
+                        <div class="rounded-2xl overflow-hidden shadow-xl srv-image-container h-full" 
+                            data-placeholder="{% static 'img/placeholder.png' %}">
+                            
+                            {% if service.image %}
+                                <img data-src="{{ service.image.url }}" 
+                                    src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3C/svg%3E"
+                                    class="srv-image w-full h-full object-cover"
+                                    width="800"
+                                    height="600"
+                                    alt="{{ service.name }}"
+                                    onerror="handleImageError(this)">
+                            {% else %}
+                                <img src="{% static 'img/placeholder.png' %}" 
+                                    alt="{{ service.name }}" 
+                                    class="srv-image loaded w-full h-full object-cover"
+                                    width="800"
+                                    height="600"
+                                    loading="eager">
+                            {% endif %}
                         </div>
+                    </div>
                     
                     <!-- Content Column com estilo clean -->
-                    <div class="w-full md:w-1/2 srv-parallax" data-speed="0.1">
-                        <h2 class="text-3xl font-bold mb-4 text-gray-800">{{ service.name }}</h2>
-                        <div class="prose max-w-none mb-6">
-                            <p class="text-lg mb-4 text-gray-700">{{ service.short_description }}</p>
-                            <p class="text-gray-600">{{ service.description|linebreaks }}</p>
+                    <div class="w-full md:w-1/2 srv-content-column flex flex-col">
+                        <div class="flex-grow"> <!-- Conteúdo superior -->
+                            <h2 class="text-3xl font-bold mb-4 text-gray-800">{{ service.name }}</h2>
+                            <div class="prose max-w-none mb-6">
+                                <p class="text-lg mb-4 text-gray-700">{{ service.short_description }}</p>
+                                <p class="text-gray-600">{{ service.description|linebreaks }}</p>
+                            </div>
+                            
+                            <p class="text-amber-600 italic font-medium text-lg mb-6">
+                                {% if service.name == "Massagem Relaxante com Pedras Quentes" %}
+                                    Destaque-se do estresse e entregue-se ao calor que cura.
+                                {% elif service.name == "Massagem Relaxante Sueca" %}
+                                    Restaure seu corpo e mente com o toque sutil da massagem sueca.
+                                {% else %}
+                                    Equilibre corpo e mente com o toque terapêutico.
+                                {% endif %}
+                            </p>
                         </div>
                         
-                        <!-- Tagline em destaque no estilo do exemplo -->
-                        <p class="text-amber-600 italic font-medium text-lg mb-6">
-                            {% if service.name == "Massagem Relaxante com Pedras Quentes" %}
-                                Destaque-se do estresse e entregue-se ao calor que cura.
-                            {% elif service.name == "Massagem Relaxante Sueca" %}
-                                Restaure seu corpo e mente com o toque sutil da massagem sueca.
-                            {% else %}
-                                Equilibre corpo e mente com o toque terapêutico.
-                            {% endif %}
-                        </p>
-                        
-                        <div class="flex flex-wrap gap-4 mb-6">
-                            <div class="bg-gray-100 px-4 py-2 rounded-md text-gray-700">
-                                <span class="font-bold">Duração:</span> {{ service.duration }} minutos
+                        <div> <!-- Conteúdo inferior -->
+                            <div class="flex flex-wrap gap-4 mb-6">
+                                <div class="bg-gray-100 px-4 py-2 rounded-md text-gray-700">
+                                    <span class="font-bold">Duração:</span> {{ service.duration }} minutos
+                                </div>
+                                <div class="bg-gray-100 px-4 py-2 rounded-md text-gray-700">
+                                    <span class="font-bold">Preço:</span> R$ {{ service.price }}
+                                </div>
                             </div>
-                            <div class="bg-gray-100 px-4 py-2 rounded-md text-gray-700">
-                                <span class="font-bold">Preço:</span> R$ {{ service.price }}
-                            </div>
+                            <a href="https://wa.link/y60urm"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="btn-service-hero bg-black bg-opacity-20 hover:bg-opacity-0 font-medium py-3 px-6">
+                                Agendar Sessão
+                            </a>
                         </div>
-                        <a href="https://wa.link/y60urm"
-                           target="_blank"
-                           rel="noopener noreferrer"
-                           class="btn-service-hero bg-black bg-opacity-20 hover:bg-opacity-0 font-medium py-3 px-6">
-                            Agendar Sessão
-                        </a>
                     </div>
                 </div>
             </div>

@@ -56,7 +56,7 @@ function initScrollReveal() {
 
 // Função para inicializar o efeito parallax
 function initParallax() {
-  const parallaxElements = document.querySelectorAll('.srv-parallax');
+  const parallaxElements = document.querySelectorAll('.srv-image-container, .srv-content-column');
   
   let ticking = false;
 
@@ -66,9 +66,11 @@ function initParallax() {
               const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
               
               parallaxElements.forEach(element => {
-                  const speed = element.getAttribute('data-speed') || 0.1;
-                  const yPos = -(scrollTop * speed);
-                  element.style.transform = `translateY(${yPos}px)`;
+                  const speed = parseFloat(element.getAttribute('data-speed')) || 0.05;
+                  const yPos = scrollTop * speed;
+                  
+                  // Aplica apenas ao background para não afetar o layout
+                  element.style.backgroundPositionY = `${yPos}px`;
               });
               
               ticking = false;
@@ -135,4 +137,24 @@ function handleImageError(img) {
   }
   img.classList.add('loaded');
   return true; // Previne loops de erro
+}
+
+// Adicione esta função no seu DOMContentLoaded
+function equalizeHeights() {
+  document.querySelectorAll('.srv-card').forEach(card => {
+      const imageCol = card.querySelector('.srv-image-container');
+      const contentCol = card.querySelector('.srv-content-column');
+      
+      if (imageCol && contentCol) {
+          // Pega a maior altura entre as colunas
+          const maxHeight = Math.max(
+              imageCol.offsetHeight, 
+              contentCol.offsetHeight
+          );
+          
+          // Aplica a altura máxima a ambas as colunas
+          imageCol.style.minHeight = `${maxHeight}px`;
+          contentCol.style.minHeight = `${maxHeight}px`;
+      }
+  });
 }

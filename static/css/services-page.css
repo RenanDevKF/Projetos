@@ -3,6 +3,33 @@
     opacity: 0;
     transform: translateY(30px);
     transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    margin-bottom: 5rem; /* Espaçamento consistente entre cards */
+}
+
+/* Layout dos cards */
+.srv-card > div { /* Esta é a div flex container */
+    align-items: flex-start; /* Alinha os itens no topo */
+    min-height: 400px; /* Altura mínima para manter consistência */
+}
+
+/* Coluna da imagem */
+.srv-card .srv-image-container {
+    height: 100%; /* Ocupa toda a altura disponível */
+    min-height: 300px; /* Altura mínima para a imagem */
+}
+
+/* Coluna do conteúdo */
+.srv-card .srv-content-column {
+    height: 100%; /* Ocupa toda a altura disponível */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distribui o espaço verticalmente */
+}
+
+/* Garante que o texto não ultrapasse os limites */
+.srv-card .prose {
+    max-height: 100%;
+    overflow: hidden;
 }
 
 .srv-card.visible {
@@ -125,4 +152,40 @@
         padding-top: 75%; /* Fallback para proporção 4:3 */
         height: 0;
     }
+}
+
+/* Adicione estas regras no final do arquivo */
+
+/* Correção para o layout dos cards */
+.srv-card > .flex {
+    align-items: stretch;
+    position: relative; /* Adicionado para conter o parallax */
+}
+
+/* Container da imagem - versão ajustada */
+.srv-image-container {
+    min-height: 300px;
+    position: relative; /* Mantém o contexto para a imagem */
+    flex-shrink: 0; /* Impede que a imagem diminua */
+}
+
+/* Coluna de conteúdo - versão ajustada */
+.srv-content-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: auto !important; /* Sobrescreve qualquer altura fixa */
+    min-height: 300px; /* Altura mínima consistente */
+}
+
+/* Ajuste para o parallax */
+.srv-parallax {
+    position: static !important; /* Remove posicionamento absoluto do parallax */
+    transform: none !important; /* Remove transformações do parallax */
+}
+
+/* Container do card */
+.srv-card {
+    position: relative;
+    overflow: hidden; /* Contém qualquer elemento que possa vazar */
 }
