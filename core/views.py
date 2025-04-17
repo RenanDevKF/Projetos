@@ -3,8 +3,8 @@ from services.models import Service
 from testimonials.models import Testimonial
 
 def home(request):
-    featured_services = Service.objects.filter(is_featured=True)[:3]
-    testimonials = Testimonial.objects.filter(is_approved=True)[:6]
+    featured_services = Service.objects.filter(is_featured=True)[:6]
+    testimonials = Testimonial.objects.filter(is_approved=True)[:10]
     
     return render(request, 'core/home.html', {
         'featured_services': featured_services,
