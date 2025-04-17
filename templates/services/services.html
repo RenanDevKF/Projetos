@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Nossos Serviços - Bem-Estar{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/services-page.css' %}"> <!-- Mudei o nome para evitar conflitos -->
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section com imagem de fundo -->
+<section class="relative bg-cover bg-center" style="background-image: url('{% static 'img/massage-hero.jpg' %}'); background-position: center top 40%; height: 60vh; min-height: 400px; max-height: 70vh; display: flex; align-items: center;">
+    <div class="absolute inset-0 bg-black bg-opacity-40"></div>
+    
+    <div class="container mx-auto px-4 relative z-10">
+        <div class="text-center text-white">
+            <h1 class="text-4xl md:text-5xl font-bold mb-2">Fatho Massoterapia</h1>
+            <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto">Espaço de Acolhimento e Terapias Holísticas</p>
+            <div class="flex flex-wrap gap-4 justify-center">
+                <a href="https://wa.link/y60urm"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="btn-hero">
+                    Agende sua Consulta
+                </a>
+                <a href="{% url 'services:service_list' %}" class="btn-hero">Nossos Serviços</a>
+            </div>
+            
+            <!-- Logomarca adicionada aqui -->
+            <div class="animate-fade-in">
+                <a href="{% url 'core:home' %}" class="inline-block transition-all duration-300 hover:scale-105">
+                    <img src="{% static 'img/logo-fatho.png' %}" 
+                        alt="Logo Fatho Massoterapia" 
+                        class="mx-auto h-48 md:h-60 w-auto opacity-90 hover:opacity-100 transition-opacity">
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Services Section com estilo clean -->
+<section class="py-16 bg-gradient-to-b from-gray-50 to-white">
+    <div class="container mx-auto px-4 max-w-6xl">
+        {% for service in services %}
+            <div class="srv-card mb-28 {% if forloop.counter|divisibleby:2 %}srv-card-right{% else %}srv-card-left{% endif %}">
+                <div class="flex flex-col md:flex-row {% if forloop.counter|divisibleby:2 %}md:flex-row-reverse{% endif %} items-start gap-12"> <!-- Mudei items-center para items-start -->
+                    
+                    <!-- Image Column -->
+                    <div class="w-full md:w-1/2 mb-6 md:mb-0">
+                        <div class="rounded-2xl overflow-hidden shadow-xl srv-image-container h-full" 
+                            data-placeholder="{% static 'img/placeholder.png' %}">
+                            
+                            {% if service.image %}
+                                <img data-src="{{ service.image.url }}" 
+                                    src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3C/svg%3E"
+                                    class="srv-image w-full h-full object-cover"
+                                    width="800"
+                                    height="600"
+                                    alt="{{ service.name }}"
+                                    onerror="handleImageError(this)">
+                            {% else %}
+                                <img src="{% static 'img/placeholder.png' %}" 
+                                    alt="{{ service.name }}" 
+                                    class="srv-image loaded w-full h-full object-cover"
+                                    width="800"
+                                    height="600"
+                                    loading="eager">
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <!-- Content Column com estilo clean -->
+                    <div class="w-full md:w-1/2 srv-content-column flex flex-col">
+                        <div class="flex-grow"> <!-- Conteúdo superior -->
+                            <h2 class="text-3xl font-bold mb-4 text-gray-800">{{ service.name }}</h2>
+                            <div class="prose max-w-none mb-6">
+                                <p class="text-gray-600">{{ service.description|linebreaks }}</p>
+                            </div>
+
+                            {% if service.tagline %}
+                            <p class="text-amber-600 italic font-medium text-lg mb-6">
+                                {{ service.tagline }}
+                            </p>
+                            {% endif %}
+                        </div>
+                        
+                        <div> <!-- Conteúdo inferior -->
+                            <div class="flex flex-wrap gap-4 mb-6">
+                                <div class="bg-gray-100 px-4 py-2 rounded-md text-gray-700">
+                                    <span class="font-bold">Duração:</span> {{ service.duration }} minutos
+                                </div>
+                                {% if service.price and service.price > 0 %}
+                                <div class="bg-gray-100 px-4 py-2 rounded-md text-gray-700">
+                                    <span class="font-bold">Preço:</span> R$ {{ service.price }}
+                                </div>
+                                {% endif %}
+                            </div>
+                            <a href="https://wa.link/y60urm"
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="btn-service-hero bg-black bg-opacity-20 hover:bg-opacity-0 font-medium py-3 px-6">
+                                Agendar Sessão
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Call to Action Section -->
+<section class="py-16 bg-green-50 srv-reveal">
+    <div class="container mx-auto px-4 text-center max-w-4xl">
+        <h2 class="text-3xl font-bold mb-4 text-gray-800">Pronto para começar sua jornada de bem-estar?</h2>
+        <p class="mb-8 text-gray-600">Estamos prontos e ansiosos para te encontrar e ajudar você a alcançar o equilíbrio que procura.</p>
+        <a href="https://wa.link/y60urm"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-service-hero bg-black bg-opacity-20 hover:bg-opacity-0 font-medium py-3 px-8">
+            Agende sua Consulta
+        </a>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/services-page.js' %}"></script> <!-- Mudei o nome para evitar conflitos -->
+{% endblock %}
