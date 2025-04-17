@@ -93,9 +93,11 @@
                                 <div class="bg-gray-100 px-4 py-2 rounded-md text-gray-700">
                                     <span class="font-bold">Duração:</span> {{ service.duration }} minutos
                                 </div>
+                                {% if service.price and service.price > 0 %}
                                 <div class="bg-gray-100 px-4 py-2 rounded-md text-gray-700">
                                     <span class="font-bold">Preço:</span> R$ {{ service.price }}
                                 </div>
+                                {% endif %}
                             </div>
                             <a href="https://wa.link/y60urm"
                                target="_blank"
