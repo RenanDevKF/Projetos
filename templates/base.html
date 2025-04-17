@@ -36,9 +36,9 @@
                         <h3 class="text-sm font-semibold mb-2 text-center">Links</h3>
                         <ul class="space-y-1.5 text-xs">
                             <li><a href="{% url 'core:home' %}" class="hover:text-fatho-gold transition block text-center">Início</a></li>
-                            <li><a href="#sobre" class="hover:text-fatho-gold transition block text-center">Sobre</a></li>
+                            <li><a href="{% url 'core:home' %}#sobre" class="hover:text-fatho-gold transition block text-center">Sobre</a></li>
                             <li><a href="{% url 'services:service_list' %}" class="hover:text-fatho-gold transition block text-center">Serviços</a></li>
-                            <li><a href="#contato" class="hover:text-fatho-gold transition block text-center">Contato</a></li>
+                            <li><a href="{% url 'core:home' %}#contato" class="hover:text-fatho-gold transition block text-center">Contato</a></li>
                         </ul>
                     </div>
                 </div>
@@ -47,9 +47,30 @@
                     <div class="text-center max-w-[220px]">
                         <h3 class="text-sm font-semibold mb-2">Contato</h3>
                         <p class="text-xs mb-2">(32) 98833-4291</p>
-                        <div class="flex justify-center gap-x-3 gap-y-1 text-xs flex-wrap"> <a href="#" class="hover:text-fatho-gold transition">Instagram</a>
-                            <a href="#" class="hover:text-fatho-gold transition">Facebook</a>
-                            <a href="#" class="hover:text-fatho-gold transition">WhatsApp</a>
+                        <div class="flex justify-center gap-x-3 gap-y-1 text-xs flex-wrap">
+                            <!-- Instagram -->
+                            <a href="https://www.instagram.com/fatho.jf/" 
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="hover:text-fatho-gold transition">
+                                Instagram
+                            </a>
+                            
+                            <!-- Facebook -->
+                            <a href="https://www.facebook.com/p/FATHO-Espa%C3%A7o-de-Acolhimento-e-Terapias-Hol%C3%ADsticas-100091618688341/" 
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="hover:text-fatho-gold transition">
+                                Facebook
+                            </a>
+                            
+                            <!-- WhatsApp -->
+                            <a href="https://wa.link/y60urm" 
+                               target="_blank"
+                               rel="noopener noreferrer"
+                               class="hover:text-fatho-gold transition">
+                                WhatsApp
+                            </a>
                         </div>
                     </div>
                 </div>
