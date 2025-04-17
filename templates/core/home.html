@@ -33,7 +33,7 @@
     <!-- Sobre Fatho -->
     {% if sobre %}
     <section id="sobre" class="py-20 bg-fatho-light">
-        <div class="container mx-auto px-4 text-center mb-12">
+        <div class="container mx-auto px-4 text-center">
             <h2 class="text-4xl font-bold text-fatho-dark mb-3">
                 {{ sobre.titulo }}
             </h2>
@@ -48,7 +48,7 @@
 
                 <!-- Texto único -->
                 <div class="flex flex-col justify-center text-left text-fatho-dark text-lg leading-relaxed max-w-2xl">
-                    {{ sobre.descricao|linebreaks }}
+                    {{ sobre.descricao|safe }}
                 </div>
             </div>
         </div>
@@ -114,11 +114,11 @@
                             
                             <div class="flex space-x-3">
                                 <a href="{% url 'services:service_list' %}" 
-                                class="bg-white hover:bg-gray-50 text-fatho-dark border border-fatho-gold flex-1 py-2 rounded-md inline-flex items-center justify-center transition-all font-medium">
-                                    Consultar
+                                   class="btn-hero bg-white hover:bg-gray-50 text-fatho-dark border border-fatho-gold flex-1 py-3 px-6 rounded-full inline-flex items-center justify-center transition-all duration-300 font-medium transform hover:-translate-y-1 hover:shadow-lg">
+                                    Detalhes
                                 </a>
-                                <a href="{% url 'core:booking' %}?service={{ service.id }}" 
-                                class="bg-fatho-gold hover:bg-fatho-gold/90 text-fatho-dark flex-1 py-2 rounded-md inline-flex items-center justify-center transition-all font-medium">
+                                <a href="#contato"
+                                   class="btn-hero bg-fatho-gold hover:bg-fatho-gold/90 text-fatho-dark flex-1 py-3 px-6 rounded-full inline-flex items-center justify-center transition-all duration-300 font-medium transform hover:-translate-y-1 hover:shadow-lg">
                                     Agendar
                                 </a>
                             </div>
