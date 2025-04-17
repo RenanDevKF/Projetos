@@ -36,7 +36,63 @@ INSTALLED_APPS = [
     'theme',
     'services',
     'testimonials',
+    'django_ckeditor_5',
+    
 ]
+
+CKEDITOR_5_CONFIGS = {
+    'default': {
+        'toolbar': [
+            'heading', '|', 'bold', 'italic', 'link', 
+            'bulletedList', 'numberedList', 'blockQuote',
+        ],
+        'heading': {
+            'options': [
+                {'model': 'paragraph', 'title': 'Paragraph', 'class': 'ck-heading_paragraph'},
+                {'model': 'heading1', 'view': 'h1', 'title': 'Heading 1', 'class': 'ck-heading_heading1'},
+                {'model': 'heading2', 'view': 'h2', 'title': 'Heading 2', 'class': 'ck-heading_heading2'}
+            ]
+        },
+        'htmlSupport': {
+            'allow': [
+                {'name': 'span', 'classes': ['text-black']},  # Permitir classe text-black
+            ]
+        },
+        'htmlEmbed': {
+            'showPreviews': True
+        },
+    },
+    'extends': {
+        'blockToolbar': [
+            'paragraph', 'heading1', 'heading2', '|',
+            'bulletedList', 'numberedList', '|',
+            'blockQuote',
+        ],
+        'toolbar': [
+            'heading', '|', 'bold', 'italic', 'link', '|',
+            'bulletedList', 'numberedList', 'blockQuote', '|',
+        ],
+        'ui': {
+            'viewportOffset': { 'top': 50 }  # Ajuste de espaçamento
+        },
+        'language': 'pt-br',
+        'style': {
+            'definitions': [
+                {
+                    'name': 'Black Text',
+                    'element': 'span',
+                    'classes': ['text-black'],
+                    'styles': {
+                        'color': '#000000 !important',  # Forçar cor preta
+                    }
+                }
+            ],
+            'default': 'Black Text'  # Aplicar estilo por padrão
+        }
+    }
+}
+
+CKEDITOR_5_CUSTOM_CSS = os.path.join(BASE_DIR, 'static', 'css', 'ckeditor5-admin.css')
 
 # Middleware
 MIDDLEWARE = [
