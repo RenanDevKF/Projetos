@@ -5,6 +5,7 @@ services:
     buildCommand: |
       pip install -r requirements.txt && \
       python manage.py migrate && \
+      mkdir -p staticfiles  # Garante que a pasta existe
       python manage.py collectstatic --noinput
     startCommand: gunicorn fathowebpage.wsgi:application
     envVars:
@@ -18,6 +19,8 @@ services:
         fromDatabase:
           name: fathojf_db
           property: connectionString
+      - key: ALLOWED_HOSTS  # Adicione esta linha
+        value: ".onrender.com,localhost,fathojf.onrender.com"
 
 databases:
   - name: fathojf_db
