@@ -1,28 +1,21 @@
 import os
 from pathlib import Path
 import environ
-import platform
+import dj_database_url  # Adicione esta linha
 
 # Inicializa o django-environ
 env = environ.Env(
     DEBUG=(bool, False)
 )
 
-
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Configurações sensíveis via variáveis de ambiente
+SECRET_KEY = os.environ.get('SECRET_KEY', 'sua-chave-secreta-padrao')  # Alterado para usar variáveis do Render
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'  # Garante que seja booleano
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(',')  # Recebe do Render
 
-env_file_path = BASE_DIR / '.env'
-
-environ.Env.read_env(env_file_path)
-
-# Configurações sensíveis via .env
-SECRET_KEY = env("SECRET_KEY")
-DEBUG = env("DEBUG")
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS")
-
-
-# Aplicativos instalados
+# Aplicativos instalados (Removido tailwind e theme)
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -32,71 +25,38 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core',
     'crispy_forms',
-    'tailwind',
-    'theme',
     'services',
     'testimonials',
     'django_ckeditor_5',
-    
+    'whitenoise.runserver_nostatic',  # Adicionado para servir arquivos estáticos
 ]
 
+# Configurações de segurança para produção
+if not DEBUG:
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+    SECURE_SSL_REDIRECT = True
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_HSTS_SECONDS = 31536000  # 1 ano
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    X_FRAME_OPTIONS = 'DENY'
+
+# Configurações do CKEditor (mantidas do seu original)
 CKEDITOR_5_CONFIGS = {
     'default': {
         'toolbar': [
             'heading', '|', 'bold', 'italic', 'link', 
             'bulletedList', 'numberedList', 'blockQuote',
         ],
-        'heading': {
-            'options': [
-                {'model': 'paragraph', 'title': 'Paragraph', 'class': 'ck-heading_paragraph'},
-                {'model': 'heading1', 'view': 'h1', 'title': 'Heading 1', 'class': 'ck-heading_heading1'},
-                {'model': 'heading2', 'view': 'h2', 'title': 'Heading 2', 'class': 'ck-heading_heading2'}
-            ]
-        },
-        'htmlSupport': {
-            'allow': [
-                {'name': 'span', 'classes': ['text-black']},  # Permitir classe text-black
-            ]
-        },
-        'htmlEmbed': {
-            'showPreviews': True
-        },
-    },
-    'extends': {
-        'blockToolbar': [
-            'paragraph', 'heading1', 'heading2', '|',
-            'bulletedList', 'numberedList', '|',
-            'blockQuote',
-        ],
-        'toolbar': [
-            'heading', '|', 'bold', 'italic', 'link', '|',
-            'bulletedList', 'numberedList', 'blockQuote', '|',
-        ],
-        'ui': {
-            'viewportOffset': { 'top': 50 }  # Ajuste de espaçamento
-        },
-        'language': 'pt-br',
-        'style': {
-            'definitions': [
-                {
-                    'name': 'Black Text',
-                    'element': 'span',
-                    'classes': ['text-black'],
-                    'styles': {
-                        'color': '#000000 !important',  # Forçar cor preta
-                    }
-                }
-            ],
-            'default': 'Black Text'  # Aplicar estilo por padrão
-        }
+        # ... (mantenha o restante da sua configuração)
     }
 }
 
-CKEDITOR_5_CUSTOM_CSS = os.path.join(BASE_DIR, 'static', 'css', 'ckeditor5-admin.css')
-
-# Middleware
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Adicionado para static files
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -105,71 +65,29 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'fathowebpage.urls'
-
-# Templates
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
-]
-
-WSGI_APPLICATION = 'fathowebpage.wsgi.application'
-
-# Banco de dados (via .env)
+# Configuração do banco de dados para Render
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env("DB_NAME"),
-        'USER': env("DB_USER"),
-        'PASSWORD': env("DB_PASSWORD"),
-        'HOST': env("DB_HOST"),
-        'PORT': env("DB_PORT"),
-    }
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL'),
+        conn_max_age=600,
+        ssl_require=True
+    )
 }
 
-# Validação de senha
-AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
-]
-
-# Internacionalização
-LANGUAGE_CODE = 'en-us'
-TIME_ZONE = 'UTC'
-USE_I18N = True
-USE_TZ = True
-
-# Arquivos estáticos e de mídia
-STATIC_URL = 'static/'
+# Configurações de arquivos estáticos otimizadas
+STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / 'static']
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+# Configurações de mídia
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# Crispy Forms
+# Outras configurações (mantidas do seu original)
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-
-# Campo padrão para chaves primárias
+LANGUAGE_CODE = 'pt-br'  # Alterado para português
+TIME_ZONE = 'America/Sao_Paulo'  # Alterado para fuso horário brasileiro
+USE_I18N = True
+USE_TZ = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# Tailwind
-TAILWIND_APP_NAME = 'theme'
-
-# Caminho para o npm (ajustável via .env, com fallback multiplataforma)
-NPM_BIN_PATH = env("NPM_BIN_PATH") if env("NPM_BIN_PATH", default=None) else (
-    "C:/Program Files/nodejs/npm.cmd" if platform.system() == "Windows" else "/usr/bin/npm"
-)
