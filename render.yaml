@@ -3,8 +3,9 @@ services:
     name: fatho-massoterapia
     runtime: python
     buildCommand: |
+      echo "=== ARQUIVO RENDER.YAML DETECTADO ==="
       pip install -r requirements.txt
-      python manage.py migrate
+      python manage.py migrategit status
       mkdir -p staticfiles  # Garante que a pasta existe
       python manage.py collectstatic --noinput
     startCommand: gunicorn fathowebpage.wsgi:application
