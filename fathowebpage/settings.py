@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 import environ
-import dj_database_url  # Adicione esta linha
+import dj_database_url
 
 # Inicializa o django-environ
 env = environ.Env(
@@ -11,24 +11,34 @@ env = environ.Env(
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Configurações sensíveis via variáveis de ambiente
-SECRET_KEY = os.environ.get('SECRET_KEY', 'sua-chave-secreta-padrao')  # Alterado para usar variáveis do Render
-DEBUG = os.environ.get('DEBUG', 'False') == 'True'  # Garante que seja booleano
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(',')  # Recebe do Render
+SECRET_KEY = os.environ.get('SECRET_KEY', 'sua-chave-secreta-padrao')
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-# Aplicativos instalados (Removido tailwind e theme)
+# Configuração explícita de ALLOWED_HOSTS para produção
+ALLOWED_HOSTS = [
+    'fathojf.onrender.com',  # Seu domínio no Render
+    'localhost',
+    '127.0.0.1'
+]
+
+# Se em desenvolvimento, adiciona hosts extras
+if DEBUG:
+    ALLOWED_HOSTS.extend(['*'])
+
+# Aplicativos instalados
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'whitenoise.runserver_nostatic',  # Deve vir antes de staticfiles
     'django.contrib.staticfiles',
     'core',
     'crispy_forms',
     'services',
     'testimonials',
     'django_ckeditor_5',
-    'whitenoise.runserver_nostatic',  # Adicionado para servir arquivos estáticos
 ]
 
 # Configurações de segurança para produção
@@ -43,22 +53,84 @@ if not DEBUG:
     SECURE_CONTENT_TYPE_NOSNIFF = True
     X_FRAME_OPTIONS = 'DENY'
 
-# Configurações do CKEditor (mantidas do seu original)
+# Configurações do CKEditor
 CKEDITOR_5_CONFIGS = {
     'default': {
         'toolbar': [
             'heading', '|', 'bold', 'italic', 'link', 
             'bulletedList', 'numberedList', 'blockQuote',
         ],
-        # ... (mantenha o restante da sua configuração)
+        'heading': {
+            'options': [
+                {'model': 'paragraph', 'title': 'Paragraph', 'class': 'ck-heading_paragraph'},
+                {'model': 'heading1', 'view': 'h1', 'title': 'Heading 1', 'class': 'ck-heading_heading1'},
+                {'model': 'heading2', 'view': 'h2', 'title': 'Heading 2', 'class': 'ck-heading_heading2'}
+            ]
+        },
+        'htmlSupport': {
+            'allow': [
+                {'name': 'span', 'classes': ['text-black']},  # Permitir classe text-black
+            ]
+        },
+        'htmlEmbed': {
+            'showPreviews': True
+        },
+    },
+    'extends': {
+        'blockToolbar': [
+            'paragraph', 'heading1', 'heading2', '|',
+            'bulletedList', 'numberedList', '|',
+            'blockQuote',
+        ],
+        'toolbar': [
+            'heading', '|', 'bold', 'italic', 'link', '|',
+            'bulletedList', 'numberedList', 'blockQuote', '|',
+        ],
+        'ui': {
+            'viewportOffset': { 'top': 50 }  # Ajuste de espaçamento
+        },
+        'language': 'pt-br',
+        'style': {
+            'definitions': [
+                {
+                    'name': 'Black Text',
+                    'element': 'span',
+                    'classes': ['text-black'],
+                    'styles': {
+                        'color': '#000000 !important',  # Forçar cor preta
+                    }
+                }
+            ],
+            'default': 'Black Text'  # Aplicar estilo por padrão
+        }
     }
 }
 
-ROOT_URLCONF = 'fathowebpage.urls'
+# Configurações de templates
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]
 
+# Configuração de URLs
+ROOT_URLCONF = 'fathowebpage.urls'
+WSGI_APPLICATION = 'fathowebpage.wsgi.application'
+
+# Middleware
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # Adicionado para static files
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -67,7 +139,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# Configuração do banco de dados para Render
+# Banco de dados
 DATABASES = {
     'default': dj_database_url.config(
         default=os.environ.get('DATABASE_URL'),
@@ -76,20 +148,30 @@ DATABASES = {
     )
 }
 
-# Configurações de arquivos estáticos otimizadas
+# Validação de senha
+AUTH_PASSWORD_VALIDATORS = [
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
+]
+
+# Arquivos estáticos
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Configurações de mídia
+# Arquivos de mídia
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# Outras configurações (mantidas do seu original)
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
-LANGUAGE_CODE = 'pt-br'  # Alterado para português
-TIME_ZONE = 'America/Sao_Paulo'  # Alterado para fuso horário brasileiro
+# Configurações internacionais
+LANGUAGE_CODE = 'pt-br'
+TIME_ZONE = 'America/Sao_Paulo'
 USE_I18N = True
 USE_TZ = True
+
+# Configurações extras
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
