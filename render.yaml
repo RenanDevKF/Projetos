@@ -19,8 +19,6 @@ services:
         fromDatabase:
           name: fathojf_db
           property: connectionString
-      - key: ALLOWED_HOSTS  # Adicione esta linha
-        value: ".onrender.com,localhost,fathojf.onrender.com"
 
 databases:
   - name: fathojf_db
