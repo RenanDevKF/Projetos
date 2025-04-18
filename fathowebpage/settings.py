@@ -54,6 +54,8 @@ CKEDITOR_5_CONFIGS = {
     }
 }
 
+ROOT_URLCONF = 'fathowebpage.urls'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',  # Adicionado para static files
