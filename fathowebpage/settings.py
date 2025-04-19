@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'services',
     'testimonials',
     'django_ckeditor_5',
+    'django_tailwind',
 ]
 
 # Configurações de segurança para produção
@@ -119,9 +120,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
-            'builtins': [
-                'django_tailwind.templatetags.tailwind_tags',
-            ],
+            
         },
     },
 ]
