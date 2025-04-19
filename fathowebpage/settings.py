@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'testimonials',
     'django_ckeditor_5',
     'django_tailwind',
+    'theme',
 ]
 
 # Configurações de segurança para produção
@@ -177,3 +178,7 @@ USE_TZ = True
 # Configurações extras
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Tailwind Config
+TAILWIND_APP_NAME = 'theme'  # Nome do seu app Tailwind
+INTERNAL_IPS = ["127.0.0.1"]  # Necessário para desenvolvimento
