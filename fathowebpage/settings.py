@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'services',
     'testimonials',
     'django_ckeditor_5',
-    'django_tailwind',
+    'tailwind',
     'theme',
 ]
 
